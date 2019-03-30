@@ -1,0 +1,22 @@
+CREATE TABLE `traffic_violations` (
+	`ID`	BIGINT NOT NULL,
+	`Year`	BIGINT,
+	`Month`	BIGINT,
+	`SubAgency`	TEXT,
+	`PoliceDistrictID`	BIGINT,
+	`ViolationType`	TEXT,
+	`ViolationCategory`	TEXT,
+	`Gender`	TEXT,
+	`VehicleGroup`	TEXT,
+	`DL_State_type`	TEXT,
+	`Belts`	FLOAT,
+	`PersonalInjury`	FLOAT,
+	`PropertyDamage`	FLOAT,
+	`Fatal`	FLOAT,
+	`CommercialVehicle`	FLOAT,
+	`Alcohol`	FLOAT,
+	`WorkZone`	FLOAT,
+	`ContributedToAccident`	FLOAT,
+	`ViolationCount`	BIGINT,
+	PRIMARY KEY(`ID`)
+);
