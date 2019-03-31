@@ -13,6 +13,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 import createGeoJSON
+import dataQueries as dq
+
+
 app = Flask(__name__)
 
 
@@ -58,12 +61,31 @@ def add_header(r):
 def distMap():
     """Return a geojson for displaying map."""
 
-    # call crete GeoJSON function to 
+    # call create GeoJSON function to 
     res = createGeoJSON.mainFunc(db, Violations) 
 
     #print(res['features'][0])
     # Return a list of the column names (sample names)
     return jsonify(res)
+
+@app.route("/YOYchange")
+def yoy_Change():
+    """Return a json for displaying Total Violations vs YoY change."""
+
+    # call data extraction function - that return a DF
+    df_res = dq.violation_YOY_Change(db,Violations)
+
+    return jsonify(df_res.to_dict(orient = "records"))
+
+@app.route("/distContribYOY")
+def distContribYOY():
+    """Return a json for displaying Total Violations vs YoY change."""
+
+    # call data extraction function - that return a DF
+    df_res = dq.dist_Contrib_YOY(db,Violations)
+
+    return jsonify(df_res.to_dict(orient = "records"))
+
 
 
 if __name__ == "__main__":
