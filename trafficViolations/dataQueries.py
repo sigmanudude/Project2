@@ -39,6 +39,7 @@ from sqlalchemy.sql import operators
 # extract unique years
 def getYears(db, V):
     res = pd.DataFrame(db.session.query(distinct(V.Year)).all(), columns = ['Year'])
+    res['Year'] = res['Year'].astype(str)
     return res
 
 #getYears()
@@ -46,6 +47,7 @@ def getYears(db, V):
 # extract uniq Months
 def getMonths(db, V):
     res = pd.DataFrame(db.session.query(distinct(V.Month)).all(), columns = ['Month'])
+    res['Month'] = res['Month'].astype(str)
     return res
 
 #getMonths()
@@ -53,6 +55,7 @@ def getMonths(db, V):
 # extract uniq Qtr
 def getQtrs(db, V):
     res = pd.DataFrame(db.session.query(distinct(V.Qtr)).all(), columns = ['Qtr'])
+    res['Qtr'] = res['Qtr'].astype(str)
     return res
 
 #getQtrs()
@@ -60,6 +63,7 @@ def getQtrs(db, V):
 # extract uniq SubAgency and Police District
 def getPoliceDist(db, V):
     res = pd.DataFrame(db.session.query(V.SubAgency,V.PoliceDistrictID).distinct().all(), columns = ['SubAgency','PoliceDistrictID'])
+    res['PoliceDistrictID'] = res['PoliceDistrictID'].astype(str)
     return res
 
 # getPoliceDist()
@@ -159,4 +163,81 @@ def dist_Contrib_YOY(db, V):
 	return df_final
     
 #dist_Contrib_YOY()
+
+# function to extract Violation  by district
+# parameters Year (All, specific Year), Category (All & specific category) and District (All and specific)
+def filterData_main(db, V, yr = 0, cat = "all", dist = 0):
+    
+    _filter = [1==1, V.Qtr.in_([1,2,3,4])]
+    
+    if(yr != 0):
+        _filter.append(V.Year.in_([yr]))
+    
+    if(cat != "all"):
+        _filter.append(V.ViolationCategory.in_([cat]))
+    
+    if(dist != 0):
+        _filter.append(V.PoliceDistrictID.in_([dist]))
+    
+    
+    #list of items to select
+    selList = [V.Year,V.Qtr,V.Month,V.SubAgency,V.PoliceDistrictID,V.ViolationType,V.ViolationCategory,
+               V.VehicleGroup,V.PersonalInjury,V.PropertyDamage,V.Fatal,V.ContributedToAccident,V.ViolationCount]
+    
+    res = db.session.query(*selList).filter(*_filter).all()
+                       
+    df = pd.DataFrame(res, columns = ["Year","Qtr","Month","SubAgency","PoliceDistrictID","ViolationType",
+                                      "ViolationCategory","VehicleGroup","PersonalInjury","PropertyDamage","Fatal",
+                                      "ContributedToAccident","ViolationCount"])
+    
+    return df
+
+
+def getViolation_ByDist(db, V,yr, cat, dist):
+    """ FUNCTION: getViolation_ByDist """
+    """ desc : extract violation count by district and other filters as given by user (Year, Category and District) % """
+    """ return DataFrame with SubAgency, Police District, Total Violations """
+    
+    df_all = filterData_main(db, V,yr, cat, dist)
+    
+    df_all = df_all[['SubAgency','PoliceDistrictID','ViolationCount']].\
+                groupby(['SubAgency','PoliceDistrictID']).agg(np.sum)
+    
+    df_all.reset_index(inplace = True)
+    
+    return df_all
+
+#getViolation_ByDist(0,"all",0)
+
+def getViolation_ByCat(db, V, yr, cat, dist):
+    """ FUNCTION: getViolation_ByCat """
+    """ desc : extract violation count by Category and other filters as given by user (Year, Category and District) % """
+    """ return DataFrame with ViolationCategory, Total Violations """
+    
+    df_all = filterData_main(db, V,yr, cat, dist)
+    
+    df_all = df_all[['ViolationCategory','ViolationCount']].\
+                groupby(['ViolationCategory']).agg(np.sum)
+    
+    df_all.reset_index(inplace = True)
+    
+    return df_all
+
+# getViolation_ByCat(0,"all",0)
+
+def getViolation_ByType(db, V, yr, cat, dist):
+    """ FUNCTION: getViolation_ByType """
+    """ desc : extract violation count by Violation Type and other filters as given by user (Year, Category and District) % """
+    """ return DataFrame with ViolationType, Total Violations """
+    
+    df_all = filterData_main(db, V, yr, cat, dist)
+    
+    df_all = df_all[['ViolationType','ViolationCount']].\
+                groupby(['ViolationType']).agg(np.sum)
+    
+    df_all.reset_index(inplace = True)
+    
+    return df_all
+
+# getViolation_ByType(0,"all",0)
 

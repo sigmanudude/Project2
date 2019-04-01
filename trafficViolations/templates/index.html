@@ -14,11 +14,7 @@
     crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
     integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
-    crossorigin=""></script>
-
-    <!-- d3 JavaScript -->
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-
+    crossorigin=""></script>    
     <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
 
@@ -44,7 +40,38 @@
               </ul> -->
       </nav>
       <div class="row">
-        <div class= "col-xs-12 col-sm-12 col-md-6">
+          <div class = "col-xs-12 col-sm-12 col-md-12" style = "background-color: #e3e3e3">
+            <div class="form-group" style="font-size:12px"> 
+            <form><ul class="list-inline" id="filters">
+                <li class="list-inline-item">
+                <label for="year">Select a Year</label>
+                <select type="select" id="years" name="years">
+                  <option value = "0" >All years</option>
+                </select>
+                </li>
+                <li class="list-inline-item">
+                <label for="policedist">Select a Police District</label>
+                <select type="select" id="district" name="district">
+                    <option value = "0">All Districts</option>
+                </select>
+              </li>
+              <li class="list-inline-item">
+                <label for="violCat">Select a Violation Category</label>
+                <select type="select" id="category" name="category">
+                    <option value = "all">All Categories</option>
+                </select>
+              </li>
+            </ul></div> 
+            <button id="filter-btn" type="submit" class="btn btn-default" 
+            style="font-size:12px; background-color: steelblue;color:white;">Filter</button>
+            
+            <button id="clear-filter-btn" type="submit" class="btn btn-default" 
+            style="font-size:12px; background-color: steelblue; color:white">Reset</button>
+          </form>
+            </div>
+          </div>
+        <div class="row">
+        <div class= "col-xs-12 col-sm-12 col-md-10">
             <div class="card" style = "border:none;margin:1rem 0 0 0;" >
                 <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
                     <h3><strong>Violation Heatmap</strong></h3>
@@ -62,19 +89,21 @@
     
     <!-- API key -->
     <script type="text/javascript" src="static/js/config.js"></script>
-      <!-- JS  -->
-    <!-- <script type="text/javascript" src="static/js/logic.js"></script> -->
-    <!-- <script type="text/javascript" src="static/js/logic2.js"></script> -->
-    <!-- <script type="text/javascript" src="static/js/logic3.js"></script> -->
-    <!-- <script type="text/javascript" src="static/js/logic4.js"></script> -->
-    <!-- <script type="text/javascript" src="static/js/logic5.js"></script> -->
-    <script type="text/javascript" src="static/js/logic6.js"></script>
-
+    
     <!-- BOOTSTRAP SCRIPT  -->
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   
+  <!-- D3 & Plotly -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- custom JS  -->
+    
+    <script type="text/javascript" src="static/js/main.js"></script>
+    
   </body>
 </html>
