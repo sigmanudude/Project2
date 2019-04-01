@@ -8,6 +8,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from sqlalchemy import func # library to use aggregate functions
+from sqlalchemy.sql import operators #library for in operator
 
 # libraries to read json
 import json
@@ -63,13 +64,24 @@ def genFeatureDict(info):
     
     return f
 
-def mainFunc(db, Violations):
+def mainFunc(db, V, yr, cat, dist):
     
+    # construct the filter
+    _filter = [1==1, V.Qtr.in_([1,2,3,4])]
+    
+    if(yr != 0):
+        _filter.append(V.Year.in_([yr]))
+    
+    if(cat != "all"):
+        _filter.append(V.ViolationCategory.in_([cat]))
+    
+    if(dist != 0):
+        _filter.append(V.PoliceDistrictID.in_([dist]))
 
     # query the table and obtain the results for Total violations count at the Police district level
 
-    resDF = pd.DataFrame(db.session.query(Violations.SubAgency, Violations.PoliceDistrictID, func.sum(Violations.ViolationCount)).                
-                group_by(Violations.SubAgency, Violations.PoliceDistrictID).all(), 
+    resDF = pd.DataFrame(db.session.query(V.SubAgency, V.PoliceDistrictID, func.sum(V.ViolationCount)).                
+                group_by(V.SubAgency, V.PoliceDistrictID).filter(*_filter).all(), 
                 columns = ['SubAgency','PoliceDistrictID','TotalViolations'])
 
     #print(resDF.SubAgency.count())
@@ -95,7 +107,7 @@ def mainFunc(db, Violations):
 
     
     #covert all values to string for easy json creation
-    coordsDF[['PoliceDistrictID','TotalViolations']] = coordsDF[['PoliceDistrictID','TotalViolations']] .astype(str)
+    coordsDF[['PoliceDistrictID','TotalViolations']] = coordsDF[['PoliceDistrictID','TotalViolations']].astype(str)
 
 
     # declare default structure of geoJSON
@@ -112,8 +124,8 @@ def mainFunc(db, Violations):
     
 
     # write file to disk
-    with open(os.path.join(jsonPath,geojson_fname), "w") as write_file:
-        json.dump(map_geojson, write_file)
+    # with open(os.path.join(jsonPath,geojson_fname), "w") as write_file:
+    #     json.dump(map_geojson, write_file)
 
     
     return map_geojson
