@@ -120,6 +120,15 @@ def violationByType(yr,cat,dist):
 
     return jsonify(df_res.to_dict(orient = "records"))
 
+@app.route("/boxPlot")
+def boxPlot():
+    """Return a json for violation by type, further filtered by year, district and category."""
+
+    # call data extraction function - that return a DF
+    traceData = dq.boxPlot_data(db,Violations)
+
+    return jsonify(traceData.to_dict(orient = "records"))
+
 # Filter routes
 @app.route("/filterData")
 def filterData():
