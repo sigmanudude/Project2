@@ -199,11 +199,25 @@ def getViolation_ByDist(db, V,yr, cat, dist):
     """ return DataFrame with SubAgency, Police District, Total Violations """
     
     df_all = filterData_main(db, V,yr, cat, dist)
+
+    # if a single district is selected, then
+    #case 1: Years is all years, then display data for all years for the specific district
+    # case 2 : Single year is selected, then display data for quarters
+    if(dist != 0):
+    	if(yr == 0):
+    		df_all = df_all[['Year','SubAgency','PoliceDistrictID','ViolationCount']].groupby(['Year','SubAgency','PoliceDistrictID'], as_index = False).agg(np.sum)
+    		df_all.columns = ['XValue','SubAgency','PoliceDistrictID','YValue']
+
+    	else:
+        	df_all = df_all[['Qtr','SubAgency','PoliceDistrictID','ViolationCount']].groupby(['Qtr','SubAgency','PoliceDistrictID'], as_index = False).agg(np.sum)
+        	df_all.columns = ['XValue','SubAgency','PoliceDistrictID','YValue']
+        	df_all.XValue = 'Qtr '+df_all.XValue.astype(str)
+    else:
+    	df_all = df_all[['SubAgency','PoliceDistrictID','ViolationCount']].groupby(['SubAgency','PoliceDistrictID'], as_index = False).agg(np.sum)
+    	df_all.columns = ['SubAgency','XValue','YValue']
+    	df_all.XValue = 'District '+df_all.XValue.astype(str)
     
-    df_all = df_all[['SubAgency','PoliceDistrictID','ViolationCount']].\
-                groupby(['SubAgency','PoliceDistrictID']).agg(np.sum)
-    
-    df_all.reset_index(inplace = True)
+    # df_all.reset_index(inplace = True)
     
     return df_all
 
@@ -240,4 +254,17 @@ def getViolation_ByType(db, V, yr, cat, dist):
     return df_all
 
 # getViolation_ByType(0,"all",0)
+
+def boxPlot_data(db, V):
+    sel = [V.Year, V.Month, func.sum(V.ViolationCount)]
+    res = pd.DataFrame(db.session.query(*sel).group_by(V.Month).group_by(V.Year).all(), columns = ['Year','Month','Cnt'])
+    
+    res = res.astype(str)
+    # data = []
+    # for i in res.Year.unique():
+    # 	data.append({"y" : str(res[res.Year == i].Cnt), type : 'box', "name": str(i)})
+
+    
+    return res
+
 

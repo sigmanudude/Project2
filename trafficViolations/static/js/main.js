@@ -27,16 +27,74 @@ function init(){
     //display leaflet map
     createMap(_yr,_cat,_dist);
 
-    // Create 
+    // Create bar plot of the violation by district and further dynamically filtered by year, district and category
+    plotViolByDist(_yr,_cat,_dist);
+
+    boxPlot_byYr();
 }
 
 init();
 
 // Helper functions
+function plotViolByDist(y,c,d){
+    d3.json(`/violationByDist/${y}/${c}/${d}`).then(function(data){
+        // console.log(data);
+        var xVal = data.map(x => x.XValue);
+        var yVal = data.map(y => +y.YValue);
+        
+        var trace1 = {
+            x : xVal,
+            y : yVal,
+            text: yVal.map(y => y.toString()),
+            textposition: 'auto',
+            type : "bar"
+        };
+        data = [trace1];
+        var lyt = {
+            // title : "Violations by District",
+            xaxis : {title : "District ID", tickangle : -45},
+            yaxis : {title : "Violation Count", 
+                    range:[Math.min.apply( Math, yVal), Math.max.apply( Math, yVal )]},
+            font: {size: 10}
+        };
+        Plotly.newPlot("distSpread", data, lyt,{displayModeBar: false, responsive: true});
+
+    });
+};
+
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
+}
+
+function boxPlot_byYr(){
+    d3.json(`/boxPlot`).then(function(pltdata){
+        // console.log(pltdata)
+        var yr = pltdata.map(r => +r.Year)
+        var unqYr = yr.filter( onlyUnique )
+        // console.log(unqYr);
+        // declare data array for box plots
+        data = [];
+        unqYr.map(yr => {
+            data.push({"y" : pltdata.filter(function(r){
+                            return +r.Year === yr;
+                        }).map(c => +c.Cnt), 
+                        "type": "box",
+                        "name" : yr.toString()
+                });
+        });
+        console.log(data);
+
+        var layout = {
+            title: 'Variance of Mean of Violation over years'
+          };
+        Plotly.newPlot("boxPlot", data, layout,{displayModeBar: false, responsive: true});
+    });
+};
+
 function populateFilters() {    
     // Use the list of sample names to populate the select options
     d3.json("/filterData").then((filtData) => {
-        console.log(filtData['Category']);
+        // console.log(filtData['Category']);
         filtData['Category'].forEach((item) => {
         catSel
           .append("option")
@@ -70,6 +128,8 @@ function filterData(){
     
     // # call display map using filtered data
     addEdit_MapLayers(yr,cat,dist, "update");
+    //redo the plot
+    plotViolByDist(yr,cat,dist);
 };
 
 function resetFilters(){
@@ -135,7 +195,7 @@ function addEdit_MapLayers(y, c, d, mode="add"){
             data.features.map( d => {
                 d.properties.total_traffic_violations = +d.properties.total_traffic_violations;
             });
-            console.log(data); 
+            // console.log(data); 
             mapFeatures = L.choropleth(data, {
 
                 // Define what  property in the features to use
