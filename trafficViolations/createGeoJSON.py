@@ -81,7 +81,7 @@ def mainFunc(db, V, yr, cat, dist):
     # query the table and obtain the results for Total violations count at the Police district level
 
     resDF = pd.DataFrame(db.session.query(V.SubAgency, V.PoliceDistrictID, func.sum(V.ViolationCount)).                
-                group_by(V.SubAgency, V.PoliceDistrictID).filter(*_filter).all(), 
+                group_by(V.SubAgency, V.PoliceDistrictID).filter(*_filter).order_by(func.sum(V.ViolationCount)).all(), 
                 columns = ['SubAgency','PoliceDistrictID','TotalViolations'])
 
     #print(resDF.SubAgency.count())
