@@ -5,6 +5,45 @@ body {
 
 #map
 {
-  width:530px;
-  height: 400px;
+  width:330px;
+  height: 250px;
+}
+/* CSS from the Leaflet-Choropleth documentation */
+.legend {
+  padding: 6px 8px;
+  font: 9px Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #555;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2)
+}
+
+.legend ul {
+  padding: 0;
+  margin: 0;
+  clear: both;
+  list-style-type: none
+}
+
+.legend li {
+  display: inline-block;
+  width: 17px;
+  height: 12px;
+}
+
+.legend .min {
+  float: left;
+  padding-right: 4px;
+  width: 35px;
+  text-align: right;
+  vertical-align: middle;
+}
+
+.legend .max {
+  float: right;
+  width: 45px;
+  padding-left: 4px;
+  vertical-align: middle;
 }
