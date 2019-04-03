@@ -31,6 +31,8 @@ function init(){
     plotViolByDist(_yr,_cat,_dist);
 
     boxPlot_byYr();
+
+    buildCharts();
 }
 
 init();
@@ -87,7 +89,7 @@ function boxPlot_byYr(){
         var layout = {
             title: 'Variance of Mean of Violation over years'
           };
-        Plotly.newPlot("boxPlot", data, layout,{displayModeBar: false, responsive: true});
+        Plotly.newPlot("bubble", data, layout,{displayModeBar: false, responsive: true});
     });
 };
 
@@ -279,3 +281,31 @@ function addEdit_MapLayers(y, c, d, mode="add"){
         });
   
 }
+function buildCharts() {
+    d3.json(`/distContribYOY`).then((data) => {
+      var SubAgency = data.map(sub => sub.Qtr + "-" + sub.Year);
+      var ViolationCount = data.map(total => +total.Total_ViolationCount);
+      var Year = data.map(y => +y.Year);
+  console.log(data);
+      // Build a Bubble Chart
+trace1 = {
+    x: SubAgency,
+    y: ViolationCount,
+    opacity: 0.75,
+    type: 'bar'
+};
+
+data = [trace1];
+layout = {barmode: 'overlay'};
+Plotly.plot('boxPlot', {
+  data: data,
+  layout: layout
+});
+
+
+// Plotly.newPlot('boxPlot', data, layout);
+  
+    //   Plotly.plot("boxPlot", bubbleData, bubbleLayout);
+    });
+}
+
