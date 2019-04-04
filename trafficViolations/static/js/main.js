@@ -32,7 +32,7 @@ function init(){
 
     boxPlot_byYr();
 
-    // buildCharts();
+    buildCharts();
 }
 
 init();
