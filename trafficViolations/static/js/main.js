@@ -28,42 +28,20 @@ function init(){
     createMap(_yr,_cat,_dist);
 
     // Create bar plot of the violation by district and further dynamically filtered by year, district and category
-    plotViolByDist(_yr,_cat,_dist);
-
+    dynBarPlots(_yr,_cat,_dist,'violationByDist', "distSpread");
+    dynBarPlots(_yr,_cat,_dist,'violationByCat', "violationCat");
+    dynBarPlots(_yr,_cat,_dist,'violationByType', "violationType");
+    
+    // box whisker plot
     boxPlot_byYr();
 
+    // contribution of district vs YOY change
     buildCharts();
 }
 
 init();
 
 // Helper functions
-function plotViolByDist(y,c,d){
-    d3.json(`/violationByDist/${y}/${c}/${d}`).then(function(data){
-        // console.log(data);
-        var xVal = data.map(x => x.XValue);
-        var yVal = data.map(y => +y.YValue);
-        
-        var trace1 = {
-            x : xVal,
-            y : yVal,
-            text: yVal.map(y => y.toString()),
-            textposition: 'auto',
-            type : "bar"
-        };
-        data = [trace1];
-        var lyt = {
-            // title : "Violations by District",
-            xaxis : {title : "District ID", tickangle : -45},
-            yaxis : {title : "Violation Count", 
-                    range:[Math.min.apply( Math, yVal), Math.max.apply( Math, yVal )]},
-            font: {size: 10}
-        };
-        Plotly.newPlot("distSpread", data, lyt,{displayModeBar: false, responsive: true});
-
-    });
-};
-
 function onlyUnique(value, index, self) { 
     return self.indexOf(value) === index;
 }
@@ -142,7 +120,9 @@ function filterData(){
     // # call display map using filtered data
     addEdit_MapLayers(yr,cat,dist, "update");
     //redo the plot
-    plotViolByDist(yr,cat,dist);
+    dynBarPlots(yr,cat,dist, 'violationByDist', "distSpread");
+    dynBarPlots(yr,cat,dist,'violationByCat', "violationCat");
+    dynBarPlots(yr,cat,dist,'violationByType', "violationType");
 };
 
 function resetFilters(){
@@ -153,6 +133,11 @@ function resetFilters(){
     
     // redraw map features layer All data
     addEdit_MapLayers(_yr,_cat,_dist, "update");
+
+    // reset all barplots
+    dynBarPlots(_yr,_cat,_dist, 'violationByDist', "distSpread");
+    dynBarPlots(_yr,_cat,_dist,'violationByCat', "violationCat");
+    dynBarPlots(_yr,_cat,_dist,'violationByType', "violationType");
 };
 
 function createMap(y,c,d){
@@ -354,4 +339,39 @@ Plotly.plot('boxPlot', {
     //   Plotly.plot("boxPlot", bubbleData, bubbleLayout);
     });
 }
+
+function dynBarPlots(y,c,d, route, plotDiv){
+    d3.json(`/${route}/${y}/${c}/${d}`).then(function(data){
+        // console.log(data);
+        var xVal = data.map(x => x.XValue);
+        var yVal = data.map(y => Math.log2(+y.YValue));
+        
+        var trace1 = {
+            x : xVal,
+            y : yVal,
+            text: data.map(y => y.YValue.toString()),
+            textposition: 'auto',
+            type : "bar"
+        };
+        data = [trace1];
+        var lyt = {
+            // title : "Violations by District",
+            xaxis : {title : "District ID", tickangle : -45},
+            yaxis : {title : "Violation Count (log scale)", 
+                    range:[Math.min.apply( Math, yVal)-12, Math.max.apply( Math, yVal )]},
+            font: {size: 10},
+            autosize : true,
+            margin :{
+                l: 40,
+                r: 5,
+                b: 100,
+                t: 50,
+                pad: 4
+            }
+        };
+        Plotly.newPlot(plotDiv, data, lyt,{displayModeBar: false, responsive: true});
+
+    });
+};
+
 

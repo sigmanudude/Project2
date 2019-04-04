@@ -240,8 +240,27 @@ def getViolation_ByCat(db, V, yr, cat, dist):
     
     df_all = filterData_main(db, V,yr, cat, dist)
     
-    df_all = df_all[['ViolationCategory','ViolationCount']].\
-                groupby(['ViolationCategory']).agg(np.sum)
+    # if a single category is selected, then
+    #case 1: Years is all years, then display data for all years for the specific district(s)
+    # case 2 : Single year is selected, then display data for quarters
+    if(cat != "all"):
+    	if(yr == 0):
+    		df_all = df_all[['Year','ViolationCategory','ViolationCount']].groupby(['Year','ViolationCategory'], as_index = False).agg(np.sum)
+    		df_all.columns = ['XValue','ViolationCategory','YValue']
+
+    	else:
+        	df_all = df_all[['Qtr','ViolationCategory','ViolationCount']].groupby(['Qtr','ViolationCategory'], as_index = False).agg(np.sum)
+        	df_all.columns = ['XValue','ViolationCategory','YValue']
+        	df_all.XValue = 'Qtr '+df_all.XValue.astype(str)
+    else:
+    	df_all = df_all[['ViolationCategory','ViolationCount']].groupby(['ViolationCategory'], as_index = False).agg(np.sum)
+    	df_all.columns = ['XValue','YValue']    	
+    
+    
+
+    # df_all = df_all[['ViolationCategory','ViolationCount']].\
+    #             groupby(['ViolationCategory']).agg(np.sum)
+
     
     df_all.reset_index(inplace = True)
     
@@ -257,8 +276,10 @@ def getViolation_ByType(db, V, yr, cat, dist):
     df_all = filterData_main(db, V, yr, cat, dist)
     
     df_all = df_all[['ViolationType','ViolationCount']].\
-                groupby(['ViolationType']).agg(np.sum)
+                groupby(['ViolationType'], as_index = False).agg(np.sum)
+
     
+    df_all.columns = ['XValue','YValue']
     df_all.reset_index(inplace = True)
     
     return df_all
