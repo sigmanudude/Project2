@@ -100,7 +100,7 @@ function boxPlot_byYr(){
             // autosize:true,
             showlegend:false
           };
-        Plotly.newPlot("boxPlot", data, layout,{displayModeBar: false, responsive: true});
+        Plotly.newPlot("boxWhisker", data, layout,{displayModeBar: false, responsive: true});
     });
 };
 
@@ -308,7 +308,7 @@ trace1 = {
 
 data = [trace1];
 layout = {barmode: 'overlay'};
-Plotly.plot('ContribYOY', {
+Plotly.plot('boxPlot', {
   data: data,
   layout: layout
 });
