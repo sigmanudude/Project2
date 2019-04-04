@@ -1,6 +1,11 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
@@ -21,108 +26,191 @@
     <script type="text/javascript" src="static/js/choropleth.js"></script>
     <!-- Plotly js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <!-- Our CSS -->
-    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <!-- reference stylesheet-->
+    <link rel="stylesheet" href="../static/css/Styles1.css" media="screen">
 
   </head>
-  <body>
-    <div class="container" style="background-color:white;">
-      <nav class="navbar ">
-            <h1 style="font-size:42px;font-weight: bold; text-align: center">Dashboard - Traffic Violations</h1>
-            <!-- <ul class="nav justify-content-end">
-                                
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" 
-                    aria-haspopup="true" aria-expanded="false" style="color:white">Goto Section</a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#latest_news">Latest News</a>
-                      <a class="dropdown-item" href="#featured_img">Featured Image</a>
-                      <a class="dropdown-item" href="#curr_wthr">Current Weather</a>
-                      <a class="dropdown-item" href="#mars_profile">Mars Profile</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#mars_hemis">View Mars Hemispheres</a>
-                    </div>
-                  </li>
-              </ul> -->
-      </nav>
-      <div class="row">
-          <div class = "col-xs-12 col-sm-12 col-md-12" style = "background-color: #e3e3e3">
-            <div class="form-group" style="font-size:12px"> 
-            <form><ul class="list-inline" id="filters">
-                <li class="list-inline-item">
-                <label for="year">Select a Year</label>
-                <select type="select" id="years" name="years">
-                  <option value = "0" >All years</option>
-                </select>
-                </li>
-                <li class="list-inline-item">
-                <label for="policedist">Select a Police District</label>
-                <select type="select" id="district" name="district">
-                    <option value = "0">All Districts</option>
-                </select>
-              </li>
-              <li class="list-inline-item">
-                <label for="violCat">Select a Violation Category</label>
-                <select type="select" id="category" name="category">
-                    <option value = "all">All Categories</option>
-                </select>
-              </li>
-            </ul></div> 
-            <button id="filter-btn" type="submit" class="btn btn-default" 
-            style="font-size:12px; background-color: steelblue;color:white;">Filter</button>
-            
-            <button id="clear-filter-btn" type="submit" class="btn btn-default" 
-            style="font-size:12px; background-color: steelblue; color:white">Reset</button>
-          </form>
-            </div>
-          </div>
-        <div class="row">
-        <div class= "col-xs-12 col-sm-12 col-md-4">
-            <div class="card" style = "border:none;margin:1rem 0 0 0;" >
-                <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
-                    <h3><strong>Violation Heatmap</strong></h3>
-                </div>
-                <!-- map div -->
-                <div id="map"></div>
-                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                <div class="card-body">
-                      
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-4">
-            <div class="card" style = "border:none;margin:1rem 0 0 0;height:60%;font-size:10px;" >
-              <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
-                  <h3><strong>Violations by District</strong></h3>
-              </div>
-              <!-- bar chart displaying violation by district-->
-              <div id="distSpread"></div>
-              <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-              <div class="card-body">
-                    
-              </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class= "col-xs-12 col-sm-12 col-md-12">
-            <div class="card" style = "border:none;margin:1rem 0 0 0;" >
-                <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
-                    <h3><strong>Trend of Violations over years</strong></h3>
-                </div>
-                <!-- map div -->
-                <div id="boxPlot"></div>
-                <div id="bubble"></div>
-                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                <div class="card-body">
-                      
-                </div>
-            </div>
-        </div>
-        </div>
 
-    </div>
+  <body>
+        <div class="description-content-alt">
+                <h1 text-align=center class="description-header-alt">WHO HATES TRAFFIC TICKETS</h1>
+        </div>
+    <div class = "container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-7" style="padding:1px">
+                <!-- Start of Static container -->
+    <div class="container-fluid">
+            <!-- start of static portion -->
+            <section class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                <article class="description-content">
+                  <!-- <h1 text-align=center class="description-header">WHO HATES TRAFFIC TICKETS</h1>
+                  <hr class="description-hr"/> -->
+                  <div id="staticplots-1">
+                    <div class="h-50 row">
+                      <div class="col-xs-6 col-sm-6 col-md-6"><div id="YOYchange">
+                        <img src="../static/imgs/plot1.png" alt="" id="description-image"/></div>
+                    </div>
+                      <div class="col-xs-6 col-sm-6 col-md-6" style="width: 60%; height: 70%"><div id="boxWhisker"></div>  </div>
+                    </div>
+                      
+                    </div>
+                  <p>Water is Life and is fundermental to human health and survival. Securing access to safe drinking water for all would go a long way to reducing illness and death.</p>
+                  <div id="staticplot-2">
+                        <div id="boxPlot"></div>
+                      <img src="../static/imgs/plot2.png" alt="" id="description-image" style="width:55%" align="right"/>
+                    </div>
+                  <p>In this study, we will be looking at the correlation between Gross Domestic Product (GDP) and Water. We are seeking to find if contries with a high GDP have better drinking water than countries with a lower GDP .</p>
+                </article>
+              </div>
+              </section>
+          </div>
+              <!-- End of Static portion -->
+      
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-5" style="padding:1px">
+                <!-- Start of Dynamic Portion -->
+                <article class="description-content"> 
+                    <div class="container-fluid" style="background-color:white;">                 
+                    
+                    <!-- <h2 style="font-size:32px;font-weight: bold; text-align: center"  
+                    class="description-header">Dashboard - Traffic Violations</h2> -->
+                    
+            <section class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group" style="font-size:12px; border-width: 1px;"> 
+                        <form>  
+                            <ul class="list-inline" id="filters">
+                            <li class="list-inline-item">
+                            <label for="year">Filter By</label>
+                            </li>
+                            <li class="list-inline-item"></li>
+                            <select type="select" id="years" name="years">
+                              <option value = "0" >All years</option>
+                            </select>
+                            </li>
+                            <li class="list-inline-item">
+                            <!-- <label for="policedist">Select a Police District</label> -->
+                            <select type="select" id="district" name="district">
+                                <option value = "0">All Districts</option>
+                            </select>
+                          </li>
+                          <li class="list-inline-item">
+                            <!-- <label for="violCat">Select a Violation Category</label> -->
+                            <select type="select" id="category" name="category">
+                                <option value = "all">All Categories</option>
+                            </select>
+                          </li>
+                          <li class="list-inline-item">
+                            <button id="filter-btn" type="submit" class="btn btn-sm" 
+                style="font-size:10px; background-color: steelblue;color:white;">Filter</button>
+                
+                <button id="clear-filter-btn" type="submit" class="btn btn-default" 
+                style="font-size:10px; background-color: steelblue; color:white">Reset</button>
+                        </li>
+                       </ul>
+                    </div>
+                    <hr/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <h5><strong>Violation Heatmap</strong></h5>
+                          <div class="card" style = "border:none;margin:1rem 0 0 0;width:100%" >                          
+                            
+                            <!-- map div -->
+                            <div id="map"></div>
+                            <!-- <img class="card-img-top" src="../static/imgs/map.PNG" alt="Card image cap"> -->
+                            <div class="card-body">
+                                  
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                          <div class="card" style = "border:none;margin:1rem 0 0 0;height:60%;font-size:10px;" >
+                            <!-- <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
+                                <h3><strong>Violations by District</strong></h3>
+                            </div> -->
+                            <h5><strong>Violations by District</strong></h5>
+                            <!-- bar chart displaying violation by district-->
+                            <div id="distSpread"></div>
+                            <!-- <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap" style="width:80%"> -->
+                            <div class="card-body">
+                                  
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                          <div class="card" style = "border:none;margin:1rem 0 0 0;height:60%;font-size:10px;" >
+                            <!-- <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
+                                <h3><strong>Violations by Category</strong></h3>
+                            </div> -->
+                            <h5><strong>Violations by Category</strong></h5>
+                            <!-- bar chart displaying violation by district-->
+                            <div id="violationCat"></div>
+                            <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap">
+                            <div class="card-body">
+                                  
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                          <div class="card" style = "border:none;margin:1rem 0 0 0;height:60%;font-size:10px;" >
+                            <!-- <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
+                                <h3><strong>Violations by Issued Type</strong></h3>
+                            </div> -->
+                            <h5><strong>Violations by Issued Type</strong></h5>
+                            <!-- bar chart displaying violation by district-->
+                            <div id="violationType"></div>
+                            <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap">
+                            <div class="card-body">
+                                  
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
     
+                      
+                      
+                    </div>
+                  </div>
+            </section>
+            </article>
+                  
+                
+                  </div>
+            </div>
+        </div>
+    <!-- </div> -->
+    
+        <!-- </div>
+      </section>
+    </div> -->
+    <!-- <div class="row"> -->
+      <!-- <div class= "col-xs-12 col-sm-12 col-md-6">
+          <div class="card" style = "border:none;margin:1rem 0 0 0;" >
+              <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
+                  <h3><strong>Violation Heatmap</strong></h3>
+              </div>
+              <!-- map div -->
+              <!-- <div id="map"></div> -->
+              <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+              <!-- <div class="card-body">
+                    
+              </div> -->
+          <!-- </div> -->
+      <!-- </div> --> 
+    <!-- </div> -->
+    <!-- End of container --> 
+
+
     <!-- API key -->
     <script type="text/javascript" src="static/js/config.js"></script>
     
@@ -141,6 +229,6 @@
     <!-- custom JS  -->
     
     <script type="text/javascript" src="static/js/main.js"></script>
-    
-  </body>
+</body>
+
 </html>

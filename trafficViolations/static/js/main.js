@@ -87,9 +87,20 @@ function boxPlot_byYr(){
         console.log(data);
 
         var layout = {
-            title: 'Variance of Mean of Violation over years'
+            // title: 'Variance of Mean of Violation over years',
+            autosize: true,
+            margin: {
+                l: 5,
+                r: 5,
+                b: 100,
+                t: 50,
+                pad: 4
+            },
+            font:{size:10},
+            
+            showlegend:false
           };
-        Plotly.newPlot("bubble", data, layout,{displayModeBar: false, responsive: true});
+        Plotly.newPlot("boxWhisker", data, layout,{displayModeBar: false, responsive: true});
     });
 };
 
@@ -148,7 +159,7 @@ function createMap(y,c,d){
     // Creating map object
         map = L.map("map", {
             center: [39.1547, -77.2405],
-            zoom: 8.75
+            zoom: 9
             // maxBounds:[[39.0000, -77.000],[40.1547, -79.2405]]
         });
         
@@ -163,7 +174,7 @@ function createMap(y,c,d){
 
         // Add a feature layer with grey outline of all the district
         d3.json(geoJsonlink).then(function(data) {
-            
+            console.log(data)
             mapFeatures = L.geoJson(data, {
             //
                 style: function(feature) {
