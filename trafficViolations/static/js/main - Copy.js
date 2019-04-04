@@ -31,8 +31,6 @@ function init(){
     plotViolByDist(_yr,_cat,_dist);
 
     boxPlot_byYr();
-
-    buildCharts();
 }
 
 init();
@@ -87,20 +85,9 @@ function boxPlot_byYr(){
         console.log(data);
 
         var layout = {
-            // title: 'Variance of Mean of Violation over years',
-            autosize: false,
-            margin: {
-                l: 5,
-                r: 5,
-                b: 100,
-                t: 50,
-                pad: 4
-            },
-            font:{size:10},
-            // autosize:true,
-            showlegend:false
+            title: 'Variance of Mean of Violation over years'
           };
-        Plotly.newPlot("boxWhisker", data, layout,{displayModeBar: false, responsive: true});
+        Plotly.newPlot("boxPlot", data, layout,{displayModeBar: false, responsive: true});
     });
 };
 
@@ -159,7 +146,7 @@ function createMap(y,c,d){
     // Creating map object
         map = L.map("map", {
             center: [39.1547, -77.2405],
-            zoom: 9
+            zoom: 8.75
             // maxBounds:[[39.0000, -77.000],[40.1547, -79.2405]]
         });
         
@@ -174,7 +161,7 @@ function createMap(y,c,d){
 
         // Add a feature layer with grey outline of all the district
         d3.json(geoJsonlink).then(function(data) {
-            console.log(data)
+            
             mapFeatures = L.geoJson(data, {
             //
                 style: function(feature) {
@@ -292,31 +279,3 @@ function addEdit_MapLayers(y, c, d, mode="add"){
         });
   
 }
-function buildCharts() {
-    d3.json(`/distContribYOY`).then((data) => {
-      var SubAgency = data.map(sub => sub.Qtr + "-" + sub.Year);
-      var ViolationCount = data.map(total => +total.Total_ViolationCount);
-      var Year = data.map(y => +y.Year);
-  console.log(data);
-      // Build a Bubble Chart
-trace1 = {
-    x: SubAgency,
-    y: ViolationCount,
-    opacity: 0.75,
-    type: 'bar'
-};
-
-data = [trace1];
-layout = {barmode: 'overlay'};
-Plotly.plot('boxPlot', {
-  data: data,
-  layout: layout
-});
-
-
-// Plotly.newPlot('boxPlot', data, layout);
-  
-    //   Plotly.plot("boxPlot", bubbleData, bubbleLayout);
-    });
-}
-
