@@ -113,8 +113,13 @@ def violation_YOY_Change(db, V):
 	df_yoy.rename(columns = {0: 'YOY_Change_PCT'}, inplace = True)
 	df_yoy.reset_index(inplace = True)
 
+
     #merge total violations and yoy df for final df
 	df_final = pd.merge(df, df_yoy, on = ['Year','Qtr'])
+
+	# convert YOY columns to % and round off to two digits
+	df_final.YOY_Change_PCT = (df_final.YOY_Change_PCT *100).apply(round, 2)
+	df_final.YOY_Change_PCT = df_final.YOY_Change_PCT.astype(str)
 
 	return df_final
     
@@ -161,6 +166,9 @@ def dist_Contrib_YOY(db, V):
 	df_final = pd.merge(res, pd.DataFrame(df_result), on = ['SubAgency','Qtr','Year'])
 	df_YOY = violation_YOY_Change(db, V)
 	df_final1 = pd.merge(df_final, df_YOY, on = ['Qtr','Year'])
+	df_final1.Contrib_pct = (df_final1.Contrib_pct * 100).apply(round,2)
+	df_final1.Contrib_pct = df_final1.Contrib_pct.astype(str)
+
 	return df_final1
      
     

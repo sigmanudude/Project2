@@ -88,7 +88,7 @@ function boxPlot_byYr(){
 
         var layout = {
             // title: 'Variance of Mean of Violation over years',
-            autosize: false,
+            autosize: true,
             margin: {
                 l: 5,
                 r: 5,
@@ -97,7 +97,7 @@ function boxPlot_byYr(){
                 pad: 4
             },
             font:{size:10},
-            // autosize:true,
+            
             showlegend:false
           };
         Plotly.newPlot("boxWhisker", data, layout,{displayModeBar: false, responsive: true});
