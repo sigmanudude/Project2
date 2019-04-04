@@ -159,13 +159,9 @@ def dist_Contrib_YOY(db, V):
         
     # merge data for violations by district/qtr/year with contribution pct
 	df_final = pd.merge(res, pd.DataFrame(df_result), on = ['SubAgency','Qtr','Year'])
-
-	# Bring in the YOY Change data
-    df_YOY = violation_YOY_Change()
-    
-    df_final1 = pd.merge(df_final, df_YOY, on = ['Qtr','Year'])
-    
-    return df_final1
+	df_YOY = violation_YOY_Change(db,V)
+	df_final1 = pd.merge(df_final, df_YOY, on = ['Qtr','Year'])
+	return df_final1
      
     
 #dist_Contrib_YOY()
