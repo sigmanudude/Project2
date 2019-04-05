@@ -39,78 +39,51 @@ body {
 /* ----DEFAULT ELEMENT STYLING END---- */
 
 /* ----NAV START---- */
-.navbar-custom {
-  background-color: #fff;
+nav > .nav.nav-tabs{
+
+  border: none;
+    color:#fff;
+    background:#272e38;
+    border-radius:0;
+
+}
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active
+{
+  border: none;
+    padding: 18px 25px;
+    color:#fff;
+    background:#272e38;
+    border-radius:0;
 }
 
-#logo {
-  /* Box-model */
-  height: 60px;
-  padding-top: 20px;
-  padding-bottom: 5px;
-
-  /* Positioning */
-  margin-left: 70px;
-  font-family: Georgia, Times, "Times New Roman", serif;
-
-  /* Typography */
-  font-size: 30px;
-  font-weight: bold;
-  color: slategray;
-
-  /* Visual */
-  background: #fff;
+nav > div a.nav-item.nav-link.active:after
+ {
+  content: "";
+  position: relative;
+  bottom: -60px;
+  left: -10%;
+  border: 15px solid transparent;
+  border-top-color: #e74c3c ;
+}
+.tab-content{
+  background: #fdfdfd;
+    line-height: 25px;
+    border: 1px solid #ddd;
+    border-top:5px solid #e74c3c;
+    border-bottom:5px solid #e74c3c;
+    padding:30px 25px;
 }
 
-/* Logo hover state */
-#logo:hover {
-  /* Visual */
-  opacity: 0.7;
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus
+{
+  border: none;
+    background: #e74c3c;
+    color:#fff;
+    border-radius:0;
+    transition:background 0.20s linear;
 }
-
-.navbar-right-custom {
-  /* Box-model */
-  padding-top: 6px;
-  padding-right: 20px;
-
-  /* Typography */
-  font-family: Arial;
-  font-weight: lighter;
-}
-
-/* Nav element hover state */
-.navbar-default .navbar-nav > li > a:hover {
-  color: #1d0741;
-}
-
-/* Media query for nav */
-@media only screen and (max-width: 767px) {
-  .navbar-header {
-    background-color: #1d0741;
-  }
-
-  #logo {
-    width: 100%;
-
-    /* Box-model */
-    height: 60px;
-    padding-top: 20px;
-    padding-bottom: 5px;
-
-    /* Positioning */
-    margin-left: 0;
-    font-family: Georgia, Times, "Times New Roman", serif;
-
-    /* Typography */
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
-
-    /* Visual */
-    background:#1d0741;
-  }
-}
-
 /* -----NAV END---- */
 
 /* ----DESCRIPTION START---- */
@@ -350,9 +323,9 @@ adiv{
 
 #map
 {
-  /* width:330px;
-  height: 250px; */
-  height: calc(100% + 220px); width: calc(100% + 30px); position: absolute !important;
+  /* width:530px;
+  height: 50px; */
+  height: calc(100% + 200px); width: calc(100% + 40px); position: absolute !important;
 }
 .legend {
   padding: 6px 8px;

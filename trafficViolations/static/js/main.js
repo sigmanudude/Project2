@@ -146,8 +146,8 @@ function createMap(y,c,d){
     // Creating map object
         map = L.map("map", {
             center: [39.1547, -77.2405],
-            zoom: 9
-            // maxBounds:[[39.0000, -77.000],[40.1547, -79.2405]]
+            zoom: 9,
+            maxBounds:[[39.0000, -77.000],[40.1547, -79.2405]]
         });
         
         // Adding tile layer
