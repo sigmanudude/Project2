@@ -33,7 +33,9 @@ function init(){
     dynBarPlots(_yr,_cat,_dist,'violationByType', "violationType");
     
     // box whisker plot
+    YoY();
     boxPlot_byYr();
+    
 
     // contribution of district vs YOY change
     buildCharts();
@@ -279,55 +281,8 @@ function addEdit_MapLayers(y, c, d, mode="add"){
 }
 function buildCharts() {
     d3.json(`/distContribYOY`).then((data) => {
-    //   var Districts = data.map(dis => dis.SubAgency);
-    //   var QtrYear = data.map(sub => sub.Qtr + "-" + sub.Year);
-        unique = [];
-        
-
-    let agency = data.map(d => d.SubAgency);{
-        var unique2 = agency.filter(onlyUnique);
-            console.log(unique2);
-
-        };
-    let year = data.map(yr => yr.Year);{
-        var uniqueyear = year.filter(onlyUnique);
-            console.log(uniqueyear);
-    };
-
-      var ViolationCount = data.map(total => +total.Contrib_pct);
-      var ChangeYear = data.map(y =>y.Contrib_pct + "-" + unique2);
-      var ViolentYear = data.map(v => v.YOY_Change_PCT + "-" + unique2);
-      var Year = data.map(year => year.Year);
-  console.log(data);
-
-
-
-
-      // Build a Bubble Chart
-trace1 = {
-    x: uniqueyear,
-    y: ChangeYear,
-    opacity: 0.75,
-    type: 'bar'
-};
-
-trace2 = {
-    x: uniqueyear,
-    y: ViolentYear,
-    opacity: 0.75,
-    type: 'bar'
-}
-
-trace3 = {
-    x: uniqueyear,
-    y: unique2,
-    opacity: 0.75,
-    type: 'bar'
-};
-
-
-data = [trace1, trace2, trace3];
-layout = {barmode: 'stack'};
+ 
+layout = {barmode: 'relative'};
 Plotly.plot('boxPlot', {
   data: data,
   layout: layout
@@ -375,3 +330,40 @@ function dynBarPlots(y,c,d, route, plotDiv){
 };
 
 
+function YoY(){
+    d3.json(`/YOYchange`).then(function(data){
+         console.log(data);
+        var xVal = data.map(x => x.Qtr + "-" + x.Year);
+        var yVal = data.map(y => +y.Total_ViolationCount);
+        var yVal2 = data.map(y => +y.YOY_Change_PCT);
+        
+        var trace1 = {
+            x : xVal,
+            y : yVal,
+            text: yVal.map(y => y.toString()),
+            textposition: 'auto',
+            type : "line"
+        };
+
+          var trace2 = {
+            x : xVal,
+            y : yVal2,
+            yaxis: 'y2',
+            text: yVal2.map(y => y.toString()),
+            textposition: 'auto',
+            type : "bar"
+        };
+
+        data = [trace1, trace2];
+        var lyt = {
+            // title : "Traffic Violations and YoY growth",
+            xaxis : {title : "Quarter", tickangle : -45},
+            yaxis : {title : "Traffic Violations"},
+            yaxis2: {title : "YoY Growth", side: 'right', overlaying:"y" },
+            font: {size: 10}
+            
+        };
+        Plotly.newPlot("YOYchange", data, lyt,{displayModeBar: false, responsive: true});
+
+    });
+};
