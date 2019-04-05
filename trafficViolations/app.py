@@ -91,7 +91,24 @@ def distContribYOY():
     # call data extraction function - that return a DF
     df_res = dq.dist_Contrib_YOY(db,Violations)
 
-    return jsonify(df_res.to_dict(orient = "records"))
+    df_line = dq.violation_YOY_Change(db, Violations)
+    trace_line = {
+        "x": df_line.apply(lambda x:'%s-%s' % (x['Qtr'],x['Year']),axis=1).tolist(),
+        "y": df_line.YOY_Change_PCT.tolist(),
+        "type": "scatter",
+        "mode": "lines"
+        }
+    agencies = []
+    df_sub = dq.dist_Contrib_YOY(db,Violations)
+    for s in df_sub.SubAgency.unique():
+        agencies.append(     
+        {
+        "x": df_line.apply(lambda x:'%s-%s' % (x['Qtr'],x['Year']),axis=1).tolist(),
+        "y": df_sub[df_sub.SubAgency == s].Contrib_pct.tolist(),
+        "type": "bar"  
+        })
+    agencies.append(trace_line)
+    return jsonify(agencies)
 
 @app.route("/violationByDist/<yr>/<cat>/<dist>")
 def violationByDist(yr,cat,dist):
