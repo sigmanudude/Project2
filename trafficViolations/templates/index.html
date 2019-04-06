@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <title>Document</title> -->
+    <title>Traffic Violations - Dashboard</title>
 
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>Traffic Violations - Dashboard</title>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Leaflet JS & CSS -->
@@ -26,12 +26,12 @@
 
     <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
     $( function() {
       $( "#tabs" ).tabs();
     } );
-    </script>
+    </script> -->
 
     <script type="text/javascript" src="static/js/choropleth.js"></script>
     <!-- Plotly js -->
@@ -42,91 +42,6 @@
   </head>
 
   <body>
-<<<<<<< HEAD
-        <div class="description-content-alt">
-                <h1 text-align=center class="description-header-alt">WHO HATES TRAFFIC TICKETS</h1>
-        </div>
-    <div class = "container-fluid">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-7" style="padding:1px">
-                <!-- Start of Static container -->
-    <div class="container-fluid">
-            <!-- start of static portion -->
-            <section class="row">
-              <div class="col-xs-12 col-sm-12 col-md-12">
-                <article class="description-content">
-                  <!-- <h1 text-align=center class="description-header">WHO HATES TRAFFIC TICKETS</h1>
-                  <hr class="description-hr"/> -->
-                  <div id="staticplots-1">
-                    <div class="h-50 row">
-                      <div class="col-xs-6 col-sm-6 col-md-6"><div id="YOYchange">
-                        </div>
-                    </div>
-                      <div class="col-xs-6 col-sm-6 col-md-6" style="width: 60%; height: 70%"><div id="boxWhisker"></div>  </div>
-                    </div>
-                      
-                    </div>
-                  <p>Water is Life and is fundermental to human health and survival. Securing access to safe drinking water for all would go a long way to reducing illness and death.</p>
-                  <div id="staticplot-2">
-                        <div id="boxPlot"></div>
-                         
-                      <img src="../static/imgs/plot2.png" alt="" id="description-image" style="width:55%" align="right"/>
-                    </div>
-                  <p>In this study, we will be looking at the correlation between Gross Domestic Product (GDP) and Water. We are seeking to find if contries with a high GDP have better drinking water than countries with a lower GDP .</p>
-                </article>
-              </div>
-              </section>
-          </div>
-              <!-- End of Static portion -->
-      
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-5" style="padding:1px">
-                <!-- Start of Dynamic Portion -->
-                <article class="description-content"> 
-                    <div class="container-fluid" style="background-color:white;">                 
-                    
-                    <!-- <h2 style="font-size:32px;font-weight: bold; text-align: center"  
-                    class="description-header">Dashboard - Traffic Violations</h2> -->
-                    
-            <section class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group" style="font-size:12px; border-width: 1px;"> 
-                        <form>  
-                            <ul class="list-inline" id="filters">
-                            <li class="list-inline-item">
-                            <label for="year">Filter By</label>
-                            </li>
-                            <li class="list-inline-item"></li>
-                            <select type="select" id="years" name="years">
-                              <option value = "0" >All years</option>
-                            </select>
-                            </li>
-                            <li class="list-inline-item">
-                            <!-- <label for="policedist">Select a Police District</label> -->
-                            <select type="select" id="district" name="district">
-                                <option value = "0">All Districts</option>
-                            </select>
-                          </li>
-                          <li class="list-inline-item">
-                            <!-- <label for="violCat">Select a Violation Category</label> -->
-                            <select type="select" id="category" name="category">
-                                <option value = "all">All Categories</option>
-                            </select>
-                          </li>
-                          <li class="list-inline-item">
-                            <button id="filter-btn" type="submit" class="btn btn-sm" 
-                style="font-size:10px; background-color: steelblue;color:white;">Filter</button>
-                
-                <button id="clear-filter-btn" type="submit" class="btn btn-sm" 
-                style="font-size:10px; background-color: steelblue; color:white">Reset</button>
-                        </li>
-                       </ul>
-                    </div>
-                    <hr/>
-                    </div>
-=======
     <!-- SITE HEADER _ START -->
   <div class="description-content-alt">
           <h1 text-align=center class="description-header-alt">Traffic Violations of Montgomery County</h1>
@@ -145,7 +60,6 @@
                   <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" 
                   href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Data</a>
                   <!-- <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a> -->
->>>>>>> 33703fad0f4b651f61c474e3fb79f01f3fce58c4
                 </div>
               </nav>
               <!-- START OF TAB CONTENTS -->
@@ -401,12 +315,7 @@
         </div>
     </div>
 <!-- NAV TABS END -->
-<footer>
-<br>
-  <div class="description-content-alt">
-    <p  style="color:white;"><small class="text-muted"">This data is obtained from Kaggle and used only for informational and educational purpose</small></p>
-  </div>
-</footer>
+
 
    
     <!-- End of container --> 
