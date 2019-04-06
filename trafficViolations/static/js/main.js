@@ -56,67 +56,12 @@ function init(){
     // Dashboard plots and data
     // Create bar plot of the violation by district and further dynamically filtered by year, district and category
     
-<<<<<<< HEAD
-    // box whisker plot
-    YoY();
-    boxPlot_byYr();
-
-    // contribution of district vs YOY change
-    buildCharts();
-=======
     dynBarPlots(_yr,_cat,_dist,'violationByDist', "distSpread","Districts");
     dynBarPlots(_yr,_cat,_dist,'violationByCat', "violationCat","Categories");
    
->>>>>>> 33703fad0f4b651f61c474e3fb79f01f3fce58c4
 }
 
 init();
-
-// Helper functions
-function YoY(){
-    d3.json(`/YOYchange`).then(function(data){
-         console.log(data);
-        var xVal = data.map(x => x.Qtr + "-" + x.Year);
-        var yVal = data.map(y => +y.Total_ViolationCount);
-        var yVal2 = data.map(y => +y.YOY_Change_PCT);
-        
-        var trace1 = {
-            x : xVal,
-            y : yVal,
-            text: yVal.map(y => y.toString()),
-            textposition: 'auto',
-            type : "line"
-        };
-
-          var trace2 = {
-            x : xVal,
-            y : yVal2,
-            yaxis: 'y2',
-            text: yVal2.map(y => y.toString()),
-            textposition: 'auto',
-            type : "bar"
-        };
-
-        data = [trace1, trace2];
-        var lyt = {
-            // title : "Traffic Violations and YoY growth",
-            xaxis : {title : "Quarter", tickangle : -45},
-            yaxis : {title : "Traffic Violations"},
-            yaxis2: {title : "YoY Growth", side: 'right', overlaying:"y" },
-            font: {size: 10}
-            
-        };
-        Plotly.newPlot("YOYchange", data, lyt,{displayModeBar: false, responsive: true});
-
-    });
-};
-
-
-
-
-
-
-
 
 // Helper functions
 function onlyUnique(value, index, self) { 
