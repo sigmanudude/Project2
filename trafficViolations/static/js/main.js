@@ -8,6 +8,16 @@ var yrSel = d3.select("#years");
 var distSel = d3.select("#district");
 var catSel = d3.select("#category");
 
+// grab instance of div to display data
+var tblDiv = d3.select("#dataTbl");
+var dataBtn = d3.select("#data-btn");
+var pElement = d3.select("#pageDetails");
+var prev = d3.select("#data-btn-prev");
+var next = d3.select("#data-btn-next");
+var last = d3.select("#data-btn-last");
+var first = d3.select("#data-btn-first");
+var startpg = 1, totalpg = 36, currpg = 1;
+
 // default filter values
 var _yr = 0, _cat = "all", _dist = 0;
 
@@ -23,22 +33,26 @@ function init(){
     // associate event to the buttons
     submitBtn.on("click", function(){filterData();});
     clearBtn.on("click", function(){resetFilters();});
+    dataBtn.on("click", function(){displayData(_yr,_cat,_dist,tblDiv, currpg);});
+    prev.on("click", function(){displayData(_yr,_cat,_dist,tblDiv,currpg-1);});
+    next.on("click", function(){displayData(_yr,_cat,_dist,tblDiv,currpg+1);});
+    first.on("click", function(){displayData(_yr,_cat,_dist,tblDiv,startpg);});
+    last.on("click", function(){displayData(_yr,_cat,_dist,tblDiv,totalpg);});
 
     //display leaflet map
     createMap(_yr,_cat,_dist);
 
-    // Create bar plot of the violation by district and further dynamically filtered by year, district and category
-    dynBarPlots(_yr,_cat,_dist,'violationByDist', "distSpread");
-    dynBarPlots(_yr,_cat,_dist,'violationByCat', "violationCat");
-    dynBarPlots(_yr,_cat,_dist,'violationByType', "violationType");
-    
-    // box whisker plot
-    YoY();
-    boxPlot_byYr();
-    
+    // Build all static plots
+    YoY(); //YOY plot
+    boxPlot_byYr();   //box plot    
+    buildCharts();// contribution of district vs YOY change
 
-    // contribution of district vs YOY change
-    buildCharts();
+    // Dashboard plots and data
+    // Create bar plot of the violation by district and further dynamically filtered by year, district and category
+    
+    dynBarPlots(_yr,_cat,_dist,'violationByDist', "distSpread","Districts");
+    dynBarPlots(_yr,_cat,_dist,'violationByCat', "violationCat","Categories");
+   
 }
 
 init();
@@ -123,9 +137,9 @@ function filterData(){
     // # call display map using filtered data
     addEdit_MapLayers(yr,cat,dist, "update");
     //redo the plot
-    dynBarPlots(yr,cat,dist, 'violationByDist', "distSpread");
-    dynBarPlots(yr,cat,dist,'violationByCat', "violationCat");
-    dynBarPlots(yr,cat,dist,'violationByType', "violationType");
+    dynBarPlots(yr,cat,dist, 'violationByDist', "distSpread", "Districts");
+    dynBarPlots(yr,cat,dist,'violationByCat', "violationCat", "Categories");
+    // dynBarPlots(yr,cat,dist,'violationByType', "violationType");
 };
 
 function resetFilters(){
@@ -138,9 +152,9 @@ function resetFilters(){
     addEdit_MapLayers(_yr,_cat,_dist, "update");
 
     // reset all barplots
-    dynBarPlots(_yr,_cat,_dist, 'violationByDist', "distSpread");
-    dynBarPlots(_yr,_cat,_dist,'violationByCat', "violationCat");
-    dynBarPlots(_yr,_cat,_dist,'violationByType', "violationType");
+    dynBarPlots(_yr,_cat,_dist, 'violationByDist', "distSpread", "Districts");
+    dynBarPlots(_yr,_cat,_dist,'violationByCat', "violationCat","Categories");
+    // dynBarPlots(_yr,_cat,_dist,'violationByType', "violationType");
 };
 
 function createMap(y,c,d){
@@ -310,36 +324,57 @@ function buildCharts() {
     });
 }
 
-function dynBarPlots(y,c,d, route, plotDiv){
+function dynBarPlots(y,c,d, route, plotDiv, xaxisLbl = ""){
     d3.json(`/${route}/${y}/${c}/${d}`).then(function(data){
         // console.log(data);
-        var xVal = data.map(x => x.XValue);
-        var yVal = data.map(y => Math.log2(+y.YValue));
         
-        var trace1 = {
-            x : xVal,
-            y : yVal,
-            text: data.map(y => y.YValue.toString()),
-            textposition: 'auto',
-            type : "bar"
-        };
-        data = [trace1];
+        var xVal = data.map(x => x.XValue).filter(onlyUnique);
+
+        // Yvalue is based on the issue type
+        //get uniq issue type
+        var typ = data.map(r => r.Type);
+        var unqType = typ.filter(onlyUnique);
+        // console.log(unqType);
+
+        // declare the trace_data
+        var trace_data = [];
+
+        unqType.map(function(t){
+            // console.log(data.filter(d => {return d.Type === t}).map(c => c.YValue))
+            trace_data.push({
+                "x": xVal,
+                "y": data.filter(d => {return d.Type === t}).map(c => Math.log2(+c.YValue)),
+                "type":"bar",
+                // "text" : data.filter(d => {return d.Type === t}).YValue.toString(),
+                "width":0.3,
+                "name":t
+            })
+        });
+
+        console.log(trace_data);
+        
         var lyt = {
             // title : "Violations by District",
-            xaxis : {title : "District ID", tickangle : -45},
-            yaxis : {title : "Violation Count (log scale)", 
-                    range:[Math.min.apply( Math, yVal)-12, Math.max.apply( Math, yVal )]},
+            barmode: "stack",
+            xaxis : {title : xaxisLbl, tickangle : -45},
+            yaxis : {title : "Violation Count (log scale)"},
             font: {size: 10},
             autosize : true,
+            height:300,
+            width:375,
             margin :{
                 l: 40,
                 r: 5,
                 b: 100,
                 t: 50,
                 pad: 4
+            },
+            showlegend:true,
+            legend:{
+                x:-0.1, y:-0.5, orientation:"h"
             }
         };
-        Plotly.newPlot(plotDiv, data, lyt,{displayModeBar: false, responsive: true});
+        Plotly.newPlot(plotDiv, trace_data, lyt,{displayModeBar: false, responsive: true});
 
     });
 };
@@ -399,4 +434,17 @@ function YoY(){
         Plotly.newPlot("YOYchange", data, lyt,{displayModeBar: false, responsive: true});
 
     });
+};
+
+function displayData(y,c,d,divElement,pg){
+    d3.event.preventDefault();
+    pg <= 0? pg = 1: pg > 36 ? pg = 36 : pg = pg;
+
+    d3.json(`/dashboardData/${y}/${c}/${d}/${pg}`).then(function(data){
+        // console.log(data.html);
+        pElement.node().innerHTML = `Displaying page ${pg} of ${totalpg}`
+        divElement.node().innerHTML = "";
+        divElement.node().innerHTML = data.html;
+
+    }); // end of JSON
 };

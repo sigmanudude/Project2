@@ -57,13 +57,14 @@
                   role="tab" aria-controls="nav-home" aria-selected="true">Trends</a>
                   <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" 
                   href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Dashboard</a>
-                  <!-- <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
-                  <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a> -->
+                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" 
+                  href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Data</a>
+                  <!-- <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a> -->
                 </div>
               </nav>
               <!-- START OF TAB CONTENTS -->
               <!-- <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent"> -->
-                  <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+              <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                 <!-- STATIC CHARTS ? TRENDS START -->
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="container-fluid">
@@ -158,136 +159,137 @@
                       </div>
                           <!-- End of Static portion -->
                 </div>
-                <!-- STATIC CHARTS ? TRENDS START -->
+                <!-- STATIC CHARTS ? TRENDS End -->
                 <!-- DASHBOARD CHARTS ? TRENDS START -->
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                        <!-- Start of Dynamic Portion -->
                        
-                <article class="description-content"> 
-                    <div class="container-fluid" style="background-color:white;">                 
-                    
-                    <!-- <h2 style="font-size:32px;font-weight: bold; text-align: center"  
-                    class="description-header">Dashboard - Traffic Violations</h2> -->
-                    
-            <section class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group" style="font-size:12px; border-width: 1px;"> 
-                        <form>  
-                            <ul class="list-inline" id="filters">
-                            <li class="list-inline-item">
-                            <label for="year">Filter By</label>
-                            </li>
-                            <li class="list-inline-item"></li>
-                            <select type="select" id="years" name="years">
-                              <option value = "0" >All years</option>
-                            </select>
-                            </li>
-                            <li class="list-inline-item">
-                            <!-- <label for="policedist">Select a Police District</label> -->
-                            <select type="select" id="district" name="district">
-                                <option value = "0">All Districts</option>
-                            </select>
-                          </li>
-                          <li class="list-inline-item">
-                            <!-- <label for="violCat">Select a Violation Category</label> -->
-                            <select type="select" id="category" name="category">
-                                <option value = "all">All Categories</option>
-                            </select>
-                          </li>
-                          <li class="list-inline-item">
-                            <button id="filter-btn" type="submit" class="btn btn-sm" 
-                style="font-size:10px; background-color: steelblue;color:white;">Filter</button>
-                
-                <button id="clear-filter-btn" type="submit" class="btn btn-sm" 
-                style="font-size:10px; background-color: steelblue; color:white">Reset</button>
-                        </li>
-                       </ul>
-                    </div>
-                    <hr/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                      <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6">
-                            <h5><strong>Violation Heatmap</strong></h5>
-                          <div class="card" style = "border:none;margin:1rem 0 0 0;width:100%" >                          
-                            
-                            <!-- map div -->
-                            <!-- <div id="map"></div> -->
-                            <!-- <img class="card-img-top" src="../static/imgs/map.PNG" alt="Card image cap"> -->
-                            <div class="card-body">
-                                  
-                            </div>
+                  <article class="description-content"> 
+                  <div class="container" style="background-color:white;">                 
+                   
+                    <section class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-12">
+                        <!-- Filter Form Start -->
+                          <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group" style="font-size:12px; border-width: 1px;"> 
+                                  <form>  
+                                      <ul class="list-inline" id="filters">
+                                      <li class="list-inline-item">
+                                      <label for="year">Filter By</label>
+                                      </li>
+                                      <li class="list-inline-item"></li>
+                                      <select type="select" id="years" name="years">
+                                        <option value = "0" >All years</option>
+                                      </select>
+                                      </li>
+                                      <li class="list-inline-item">
+                                      <!-- <label for="policedist">Select a Police District</label> -->
+                                      <select type="select" id="district" name="district">
+                                          <option value = "0">All Districts</option>
+                                      </select>
+                                    </li>
+                                    <li class="list-inline-item">
+                                      <!-- <label for="violCat">Select a Violation Category</label> -->
+                                      <select type="select" id="category" name="category">
+                                          <option value = "all">All Categories</option>
+                                      </select>
+                                    </li>
+                                    <li class="list-inline-item">
+                                      <button id="filter-btn" type="submit" class="btn btn-sm" 
+                          style="font-size:10px; background-color: steelblue;color:white;">Filter</button>
+                          
+                          <button id="clear-filter-btn" type="submit" class="btn btn-sm" 
+                          style="font-size:10px; background-color: steelblue; color:white">Reset</button>
+                                  </li>
+                                </ul>
+                              </div>
+                              <hr/>
+                              </div>
                           </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6">
-                            <h5><strong>Violations by District</strong></h5>
-                          <div class="card" style = "border:none;margin:1rem 0 0 0;" >
-                            <!-- <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
-                                <h3><strong>Violations by District</strong></h3>
-                            </div> -->
-                            
-                            <!-- bar chart displaying violation by district-->
-                            <div id="distSpread"></div>
-                            <!-- <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap" style="width:80%"> -->
-                            <div class="card-body">
-                                  
-                            </div>
-                        </div>
-                        </div>
+                          <!-- Filter form end -->
+                          <!-- Dynamic charts Start -->
+                          
+                          <div class="row">
+                                  <div class="w-75 col-xs-12 col-sm-12 col-md-6">
+                                    <div class="card" style = "border:none;margin:1rem 0 0 0;" >
+                                      <h5><strong>Violations by District</strong></h5>
+                                      <!-- bar chart displaying violation by district-->
+                                      <div id="distSpread"></div>
+                                      <!-- <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap"> -->
+                                      <div class="card-body">
+                                            
+                                      </div>
+                                  </div>
+                                  </div>
+                                  <div class="w-75 col-xs-12 col-sm-12 col-md-6">
+                                    <div class="card" style = "border:none;margin:1rem 0 0 0;" >
+                                     
+                                      <h5><strong>Violations by Category</strong></h5>
+                                      <!-- bar chart displaying violation by district-->
+                                      <div id="violationCat"></div>
+                                      <!-- <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap"> -->
+                                      <div class="card-body">
+                                            
+                                      </div>
+                                  </div>
+                                  </div>
+                          </div>
                       </div>
-                      <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6">
-                          <div class="card" style = "border:none;margin:1rem 0 0 0;height:60%;font-size:10px;" >
-                            <!-- <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
-                                <h3><strong>Violations by Category</strong></h3>
-                            </div> -->
-                            <h5><strong>Violations by Category</strong></h5>
-                            <!-- bar chart displaying violation by district-->
-                            <div id="violationCat"></div>
-                            <!-- <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap"> -->
-                            <div class="card-body">
-                                  
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6">
-                          <div class="card" style = "border:none;margin:1rem 0 0 0;height:60%;font-size:10px;" >
-                            <!-- <div class="card-header"  style = "border:none;margin:1rem 0 0 0;">
-                                <h3><strong>Violations by Issued Type</strong></h3>
-                            </div> -->
-                            <h5><strong>Violations by Issued Type</strong></h5>
-                            <!-- bar chart displaying violation by district-->
-                            <div id="violationType"></div>
-                            <!-- <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap"> -->
-                            <div class="card-body">
-                                  
-                            </div>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-    
-                      
-                      
-                    </div>
+                        
+                    </section>
                   </div>
-                  
-            </section>
-            </article>
+                  </article>
             
                 
                 </div>
                 <!-- DASHBOARD CHARTS ? TRENDS END -->
-                
-              </div>
+                <!-- Data Display START -->
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <!-- Start of data display Portion -->                    
+                  <article class="description-content"> 
+                  <div class="container" style="background-color:white;">                 
+                    
+                    <section class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-12">
+                        <!-- display data on user request -->
+                        <p>In this section, the data used to generate charts is provided. 
+                          <br> Owing to the size of the data, it is not automatically displayed. To view the data please click the button below</p>
+                          <form>
+                              <button id="data-btn" type="submit" class="btn btn-default" 
+                              style="font-size:10px; background-color: steelblue;color:white;">View Data</button>
+                          </form>
+                          <hr/>
+                          <!-- data display -->
+                          <div class="row">
+                              <div class="w-75 col-xs-12 col-sm-12 col-md-6">
+                                  <h5><strong>Displaying Page-wise Data</strong></h5>
+                                  <p id="pageDetails"></p>
+                                  <p><form>
+                                      <button id="data-btn-first" type="submit" class="btn btn-sm" 
+                                      style="font-size:10px; background-color: steelblue;color:white;">< First ></First></button>
+                                      <button id="data-btn-prev" type="submit" class="btn btn-sm" 
+                                      style="font-size:10px; background-color: steelblue;color:white;">< Prev</button>
+                                      <button id="data-btn-next" type="submit" class="btn btn-sm" 
+                                style="font-size:10px; background-color: steelblue;color:white;">Next ></button>
+                                <button id="data-btn-last" type="submit" class="btn btn-sm" 
+                                      style="font-size:10px; background-color: steelblue;color:white;">< Last ></Last></button>
+                                  </form></p>
+                                  <div id="dataTbl"></div>
+                              </div>
+                          </div>
+                        </div>
+                        
+                    </section>
+                  </div>
+                  </article>
+             </div>
+             <!-- DATA DISPLAY END -->
+            </div>
               <!-- END OF TAB CONTENTS -->
             
-            </div>
-            <div class = "col-xs-6 col-sm-6 col-md-3">
+          </div>
+          <div class = "col-xs-6 col-sm-6 col-md-3">
               <nav>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-map-tab" href="#" 
@@ -308,13 +310,11 @@
               </div>
                 
                 
-            </div>
-          </div>
+           </div>
+        </div>
     </div>
 <!-- NAV TABS END -->
-<!-- <div id="map"></div> -->
-  <!-- </div>
-</div> -->
+
 
    
     <!-- End of container --> 

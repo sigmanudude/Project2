@@ -125,6 +125,33 @@ def distContribYOY():
     agencies.append(trace_line)
     return jsonify(agencies)
 
+@app.route("/dashboardData/<yr>/<cat>/<dist>/<pg>")
+def dashboardData(yr,cat,dist,pg):
+    """Return a json for all dashboard plots and data to be displayed as html table"""
+    
+    # get all data as per the filter criteria requested
+    df_all_data = dq.filterData_main(db,Violations, int(yr), str(cat), int(dist))
+
+    pg = int(pg)
+    st_row = 0
+    end_row = 500
+    if(pg == 36):
+        st_row = (pg-1)*500
+        end_row = df_all_data.index.size        
+    elif (pg == 1):
+        st_row = 0
+        end_row = pg * 500 
+    else:
+        st_row = (pg-1)*500
+        end_row = pg *500
+
+    df_all_data = df_all_data.iloc[st_row:end_row,]
+
+    dataHTM = {"html" : df_all_data.to_html(header = True, border = 0, classes = ['table table-striped table-hover borderless'])}
+    # print(dataHTM)
+
+    return jsonify(dataHTM)
+
 @app.route("/violationByDist/<yr>/<cat>/<dist>")
 def violationByDist(yr,cat,dist):
     """Return a json for violation by district, further filtered by year and category"""
