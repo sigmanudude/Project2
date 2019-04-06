@@ -8,4 +8,4 @@ Visualizing how traffic violations has trended over 4 years since 2012 to 2016.
 
 - Navigate to the main Flask folder - "trafficViolations"
 - from bash or cmd, run python app.py
-- from broweser, visit localhost:5000/ to view the webpage
+- from browser, visit localhost:5000/ to view the webpage
