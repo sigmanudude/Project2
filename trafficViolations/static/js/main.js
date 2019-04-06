@@ -69,11 +69,12 @@ function boxPlot_byYr(){
         var layout = {
             // title: 'Variance of Mean of Violation over years',
             autosize: true,
+            height:200,
             margin: {
                 l: 5,
                 r: 5,
-                b: 100,
-                t: 50,
+                b: 20,
+                t: 10,
                 pad: 4
             },
             font:{size:10},
@@ -147,7 +148,7 @@ function createMap(y,c,d){
         map = L.map("map", {
             center: [39.1547, -77.2405],
             zoom: 9,
-            maxBounds:[[39.0000, -77.000],[40.1547, -79.2405]]
+            // maxBounds:[[39.0000, -77.000],[40.1547, -79.2405]]
         });
         
         // Adding tile layer
@@ -213,7 +214,7 @@ function addEdit_MapLayers(y, c, d, mode="add"){
                   // Border color
                   color: "#fff",
                   weight: 1,
-                  fillOpacity: 0.8
+                  fillOpacity: 0.9
                 },
             // 
             onEachFeature: function(feature, layer) {
@@ -282,11 +283,25 @@ function addEdit_MapLayers(y, c, d, mode="add"){
 function buildCharts() {
     d3.json(`/distContribYOY`).then((data) => {
  
-layout = {barmode: 'relative'};
-Plotly.plot('boxPlot', {
-  data: data,
-  layout: layout
-});
+        layout = {
+            barmode: 'relative',
+            autosize: true,
+            height:330,
+            margin: {
+                l: 5,
+                r: 5,
+                b: 150,
+                t: 10,
+                pad: 4
+            },
+            font:{size:10},
+            
+            showlegend:true,
+            legend:{x:0.2, y:-0.3, orientation:"h"},
+            xaxis: {title:"Period", tickangle : -45}
+        };
+        Plotly.newPlot('boxPlot', data, layout, {displayModeBar: false, responsive: true}
+        );
 
 
 // Plotly.newPlot('boxPlot', data, layout);
@@ -342,25 +357,43 @@ function YoY(){
             y : yVal,
             text: yVal.map(y => y.toString()),
             textposition: 'auto',
-            type : "line"
+            type : "line",
+            name:"# of Violation ",
+            opacity:1
         };
 
           var trace2 = {
             x : xVal,
             y : yVal2,
             yaxis: 'y2',
-            text: yVal2.map(y => y.toString()),
+            text: yVal2.map(y => `${y.toString()} %`),
             textposition: 'auto',
-            type : "bar"
+            type : "bar",
+            name:"YOY Change% ",
+            opacity:0.8
         };
 
         data = [trace1, trace2];
         var lyt = {
             // title : "Traffic Violations and YoY growth",
-            xaxis : {title : "Quarter", tickangle : -45},
-            yaxis : {title : "Traffic Violations"},
-            yaxis2: {title : "YoY Growth", side: 'right', overlaying:"y" },
-            font: {size: 10}
+            xaxis : {title : "Quarter", tickangle : -45, showline:true},
+            yaxis : {title : "Traffic Violations", showline:true},
+            yaxis2: {title : "YoY Change %", side: 'right', overlaying:"y", showline:true,
+                     },
+            font: {size: 10},
+            autosize:true,
+            height:300,
+            margin:{
+                l: 45,
+                r: 45,
+                b: 70,
+                t: 0,
+                pad: 4
+            },
+            showlegend:true,
+            legend:{
+                x:0.3, y:1.1, orientation:"h"
+            }
             
         };
         Plotly.newPlot("YOYchange", data, lyt,{displayModeBar: false, responsive: true});

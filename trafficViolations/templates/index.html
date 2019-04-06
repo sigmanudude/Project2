@@ -48,9 +48,9 @@
   </div>
   <!-- SITE HEADER _ END -->
   <!-- NAV Tabs Start -->
-      <div class="container">
+      <div class="container-fluid">
           <div class="row">
-            <div class="col-xs-12 ">
+            <div class="col-xs-6 col-sm-6 col-md-9">
               <nav>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                   <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" 
@@ -62,7 +62,8 @@
                 </div>
               </nav>
               <!-- START OF TAB CONTENTS -->
-              <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+              <!-- <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent"> -->
+                  <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                 <!-- STATIC CHARTS ? TRENDS START -->
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="container-fluid">
@@ -73,21 +74,84 @@
                               <!-- <h1 text-align=center class="description-header">WHO HATES TRAFFIC TICKETS</h1>
                               <hr class="description-hr"/> -->
                               <div id="staticplots-1">
-                                <div class="h-50 row">
-                                  <div class="col-xs-6 col-sm-6 col-md-6"><div id="YOYchange">
-                                    <!-- <img src="../static/imgs/plot1.png" alt="" id="description-image"/></div> -->
+                                <div class="row">
+                                  <!-- plot 1 st -->
+                                  <div class="w-75 col-xs-6 col-sm-6 col-md-6">
+                                    
+                                    <div id="YOYchange"></div>
+                                    <p  style="background-color: #e3e3e3"><small class="text-muted">&nbsp;Plot comparing # of violations vs year on year change</small></p>
+                                    
+                                  </div> 
+                                  <div class="w-75 col-xs-6 col-sm-6 col-md-6 border-left border-info" 
+                                    style="float:right;">
+                                      <p class = "lead">The Story of Traffic Violations</p>
+                                        <p>
+                                          We wanted to look into the traffic violations for a specific area over time,
+                                          to see if traffic stops are getting less frequent or more frequent. 
+                                          <br>
+                                          Traffic violations include citations and warnings for cases such as not wearing seatbelt, property damage, personal damage, 
+                                          speeding etc.,.
+                                          <br>
+                                          A four year (2012 to 2016) worth of traffic violations data for Montgomery County, MD were found in a CSV from Kaggle called “Traffic Violations in USA”.
+                                            
+                                          However, the CSV contained to much data to represent and needed cleaning up. 
+                                            <br>
+                                          <strong>Our hypothesis was that the number of violations would be going up, 
+                                            but year over year data shows an improving trend of violations going down.</strong>
+                                      </p>
+                                  </div>
                                 </div>
-                                  <div class="col-xs-6 col-sm-6 col-md-6" style="width: 60%; height: 70%"><div id="boxWhisker"></div>  </div>
-                                </div>
+                                <br>
+                                <!-- plot1 end and plot2 start-->
+                                <div class = "row">   
+                                    <div class="w-75 col-xs-6 col-sm-6 col-md-6 border-right border-info" 
+                                    style="float:left;">
+                                        <p class = "lead">What does data say?</p>
+                                          <p>
+                                            A simple mean analysis, as illustrated by box plot to the right, 
+                                            shows that hypothesis is indeed supported with the traffic violations have risen since 2012 and 
+                                            reached a peak of 13,000 violaitions per qtr in 2015 before starting a downward trend in 2016.
+                                            <br>
+                                            The next question is, will the downward trend continue? To answer this we plotted Year on Year change analysis (plot above). 
+                                            From the plot we see
+                                            <ul>
+                                              <li>From 2012 to mid 2014, Year on Year change rose significantly pushing the violation count beyond 40K</li>
+                                              <li>However from last Qtr of 2014, the Year on Year change is on negative trend such that violations dropped significantly in 2016 </li>
+                                            </ul>
+                                          </p>
+                                    </div>                               
+                                  <div class="w-75 col-xs-6 col-sm-6 col-md-6">
+                                      <p  style="background-color: #e3e3e3"><small class="text-muted">&nbsp; Boxplot showing increasing mean year on year</small></p>
+                                    <div id="boxWhisker"></div>  
+                                    
+                                  </div>
+                                <!-- plot 2 end -->
                                   
+                                </div> 
+                              </div>
+                              <br>
+                                <!-- plot 3 start -->
+                                <div id="staticplot-2">
+                                  <div class="row">
+                                    <div class="w-75 col-xs-12 col-sm-12 col-md-9">    
+                                      <div id="boxPlot"></div>
+                                      <p  style="background-color: #e3e3e3"><small class="text-muted" >&nbsp;Depicting district wise contribution to YOY change of traffic violation </small></p>
+                                    </div>
+                                    <div class="w-75 col-xs-12 col-sm-12 col-md-3 border-left border-info">   
+                                        <p>
+                                            So, which district contributed to rise and fall of trends?
+                                            <br>
+                                            A contribution % chart (on left) was plotted, to understand the contribution increasing and decreasing trend.
+
+                                            <br>
+                                            As we see, two district, namely 3rd district-Silver spring and 4th district-Wheaton had a significant role in these trends.
+                                            The contribution from these two district has mainly determined the overall trend of violations
+                                              
+                                        </p>
+                                    </div>
+                                  </div>
                                 </div>
-                              <p>Water is Life and is fundermental to human health and survival. Securing access to safe drinking water for all would go a long way to reducing illness and death.</p>
-                              <div id="staticplot-2">
-                                    <div id="boxPlot"></div>
-                                     
-                                  <!-- <img src="../static/imgs/plot2.png" alt="" id="description-image" style="width:55%" align="right"/> -->
-                                </div>
-                              <p>In this study, we will be looking at the correlation between Gross Domestic Product (GDP) and Water. We are seeking to find if contries with a high GDP have better drinking water than countries with a lower GDP .</p>
+                                <!-- plot 3 end -->
                             </article>
                           </div>
                           </section>
@@ -98,6 +162,7 @@
                 <!-- DASHBOARD CHARTS ? TRENDS START -->
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                        <!-- Start of Dynamic Portion -->
+                       
                 <article class="description-content"> 
                     <div class="container-fluid" style="background-color:white;">                 
                     
@@ -151,7 +216,7 @@
                           <div class="card" style = "border:none;margin:1rem 0 0 0;width:100%" >                          
                             
                             <!-- map div -->
-                            <div id="map"></div>
+                            <!-- <div id="map"></div> -->
                             <!-- <img class="card-img-top" src="../static/imgs/map.PNG" alt="Card image cap"> -->
                             <div class="card-body">
                                   
@@ -210,6 +275,7 @@
                       
                     </div>
                   </div>
+                  
             </section>
             </article>
             
@@ -221,10 +287,32 @@
               <!-- END OF TAB CONTENTS -->
             
             </div>
+            <div class = "col-xs-6 col-sm-6 col-md-3">
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-map-tab" href="#" 
+                     aria-controls="nav-map" aria-selected="true">County Map</a>
+                    </div>
+              </nav>
+              <div class = "row">
+                <div class = "col-xs-12 col-sm-12 col-md-12">
+                  <div id="map"></div>
+                </div>
+              </div>
+              <div class = "row">
+                  <div class = "col-xs-12 col-sm-12 col-md-12">
+                      <p  style="background-color: #e3e3e3"><small class="text-muted">
+                          Map depicting 7 police districts of Montgomery County, MD
+                      </small></p>
+                  </div>
+              </div>
+                
+                
+            </div>
           </div>
     </div>
 <!-- NAV TABS END -->
-
+<!-- <div id="map"></div> -->
   <!-- </div>
 </div> -->
 
