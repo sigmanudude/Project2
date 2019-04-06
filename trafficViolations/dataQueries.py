@@ -192,18 +192,18 @@ def filterData_main(db, V, yr = 0, cat = "all", dist = 0):
     
     #list of items to select
     selList = [V.Year,V.Qtr,V.Month,V.SubAgency,V.PoliceDistrictID,V.ViolationType,V.ViolationCategory,
-               V.VehicleGroup,V.PersonalInjury,V.PropertyDamage,V.Fatal,V.ContributedToAccident,V.ViolationCount]
+               V.ViolationCount]
     
     res = db.session.query(*selList).filter(*_filter).all()
                        
     df = pd.DataFrame(res, columns = ["Year","Qtr","Month","SubAgency","PoliceDistrictID","ViolationType",
-                                      "ViolationCategory","VehicleGroup","PersonalInjury","PropertyDamage","Fatal",
-                                      "ContributedToAccident","ViolationCount"])
+                                      "ViolationCategory","ViolationCount"])
     
     return df
 
 
 def getViolation_ByDist(db, V,yr, cat, dist):
+# def getViolation_ByDist(df_all,yr, cat, dist):
     """ FUNCTION: getViolation_ByDist """
     """ desc : extract violation count by district and other filters as given by user (Year, Category and District) % """
     """ return DataFrame with SubAgency, Police District, Total Violations """
@@ -215,16 +215,19 @@ def getViolation_ByDist(db, V,yr, cat, dist):
     # case 2 : Single year is selected, then display data for quarters
     if(dist != 0):
     	if(yr == 0):
-    		df_all = df_all[['Year','SubAgency','PoliceDistrictID','ViolationCount']].groupby(['Year','SubAgency','PoliceDistrictID'], as_index = False).agg(np.sum)
-    		df_all.columns = ['XValue','SubAgency','PoliceDistrictID','YValue']
+    		df_all = df_all[['Year','SubAgency','PoliceDistrictID','ViolationType','ViolationCount']].groupby(['Year','SubAgency','PoliceDistrictID','ViolationType'],\
+    				 as_index = False).agg(np.sum)
+    		df_all.columns = ['XValue','SubAgency','PoliceDistrictID','Type','YValue']
 
     	else:
-        	df_all = df_all[['Qtr','SubAgency','PoliceDistrictID','ViolationCount']].groupby(['Qtr','SubAgency','PoliceDistrictID'], as_index = False).agg(np.sum)
-        	df_all.columns = ['XValue','SubAgency','PoliceDistrictID','YValue']
+        	df_all = df_all[['Qtr','SubAgency','PoliceDistrictID','ViolationType','ViolationCount']].groupby(['Qtr','SubAgency','PoliceDistrictID','ViolationType'],\
+        	 as_index = False).agg(np.sum)
+        	df_all.columns = ['XValue','SubAgency','PoliceDistrictID','Type','YValue']
         	df_all.XValue = 'Qtr '+df_all.XValue.astype(str)
     else:
-    	df_all = df_all[['SubAgency','PoliceDistrictID','ViolationCount']].groupby(['SubAgency','PoliceDistrictID'], as_index = False).agg(np.sum)
-    	df_all.columns = ['SubAgency','XValue','YValue']
+    	df_all = df_all[['SubAgency','PoliceDistrictID','ViolationType','ViolationCount']].groupby(['SubAgency','PoliceDistrictID','ViolationType'],\
+    	 as_index = False).agg(np.sum)
+    	df_all.columns = ['SubAgency','XValue','Type','YValue']
     	df_all.XValue = 'District '+df_all.XValue.astype(str)
     
     # df_all.reset_index(inplace = True)
@@ -234,6 +237,7 @@ def getViolation_ByDist(db, V,yr, cat, dist):
 #getViolation_ByDist(0,"all",0)
 
 def getViolation_ByCat(db, V, yr, cat, dist):
+# def getViolation_ByCat(df_all,yr, cat, dist):
     """ FUNCTION: getViolation_ByCat """
     """ desc : extract violation count by Category and other filters as given by user (Year, Category and District) % """
     """ return DataFrame with ViolationCategory, Total Violations """
@@ -245,16 +249,16 @@ def getViolation_ByCat(db, V, yr, cat, dist):
     # case 2 : Single year is selected, then display data for quarters
     if(cat != "all"):
     	if(yr == 0):
-    		df_all = df_all[['Year','ViolationCategory','ViolationCount']].groupby(['Year','ViolationCategory'], as_index = False).agg(np.sum)
-    		df_all.columns = ['XValue','ViolationCategory','YValue']
+    		df_all = df_all[['Year','ViolationCategory','ViolationType','ViolationCount']].groupby(['Year','ViolationCategory','ViolationType'], as_index = False).agg(np.sum)
+    		df_all.columns = ['XValue','ViolationCategory','Type','YValue']
 
     	else:
-        	df_all = df_all[['Qtr','ViolationCategory','ViolationCount']].groupby(['Qtr','ViolationCategory'], as_index = False).agg(np.sum)
-        	df_all.columns = ['XValue','ViolationCategory','YValue']
+        	df_all = df_all[['Qtr','ViolationCategory','ViolationType','ViolationCount']].groupby(['Qtr','ViolationCategory','ViolationType'], as_index = False).agg(np.sum)
+        	df_all.columns = ['XValue','ViolationCategory','Type','YValue']
         	df_all.XValue = 'Qtr '+df_all.XValue.astype(str)
     else:
-    	df_all = df_all[['ViolationCategory','ViolationCount']].groupby(['ViolationCategory'], as_index = False).agg(np.sum)
-    	df_all.columns = ['XValue','YValue']    	
+    	df_all = df_all[['ViolationCategory','ViolationType','ViolationCount']].groupby(['ViolationCategory','ViolationType'], as_index = False).agg(np.sum)
+    	df_all.columns = ['XValue','Type','YValue']    	
     
     
 
