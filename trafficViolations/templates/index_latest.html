@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Traffic Violations - Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Leaflet JS & CSS -->
+    <!-- Leaflet-Choropleth JavaScript -->
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin=""/>
+    
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+    integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+    crossorigin=""></script>    
+
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $( function() {
+      $( "#tabs" ).tabs();
+    } );
+    </script> -->
+
+    <script type="text/javascript" src="static/js/choropleth.js"></script>
+    <!-- Plotly js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- reference stylesheet-->
+    <link rel="stylesheet" href="../static/css/Styles1.css" media="screen">
+
+  </head>
+
+  <body>
+    <!-- SITE HEADER _ START -->
+  <div class="description-content-alt">
+          <h1 text-align=center class="description-header-alt">Traffic Violations of Montgomery County</h1>
+  </div>
+  <!-- SITE HEADER _ END -->
+  <!-- NAV Tabs Start -->
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-9">
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" 
+                  role="tab" aria-controls="nav-home" aria-selected="true">Trends</a>
+                  <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" 
+                  href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Dashboard</a>
+                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" 
+                  href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Data</a>
+                  <!-- <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a> -->
+                </div>
+              </nav>
+              <!-- START OF TAB CONTENTS -->
+              <!-- <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent"> -->
+              <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                <!-- STATIC CHARTS ? TRENDS START -->
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="container-fluid">
+                        <!-- start of static portion -->
+                        <section class="row">
+                          <div class="col-xs-12 col-sm-12 col-md-12">
+                            <article class="description-content">
+                              <!-- <h1 text-align=center class="description-header">WHO HATES TRAFFIC TICKETS</h1>
+                              <hr class="description-hr"/> -->
+                              <div id="staticplots-1">
+                                <div class="row">
+                                  <!-- plot 1 st -->
+                                  <div class="w-75 col-xs-6 col-sm-6 col-md-6">
+                                    
+                                    <div id="YOYchange"></div>
+                                    <p  style="background-color: #e3e3e3"><small class="text-muted">&nbsp;Plot comparing # of violations vs year on year change</small></p>
+                                    
+                                  </div> 
+                                  <div class="w-75 col-xs-6 col-sm-6 col-md-6 border-left border-info" 
+                                    style="float:right;">
+                                      <p class = "lead">The Story of Traffic Violations</p>
+                                        <p>
+                                          We wanted to look into the traffic violations for a specific area over time,
+                                          to see if traffic stops are getting less frequent or more frequent. 
+                                          <br>
+                                          Traffic violations include citations and warnings for cases such as not wearing seatbelt, property damage, personal damage, 
+                                          speeding etc.,.
+                                          <br>
+                                          A four year (2012 to 2016) worth of traffic violations data for Montgomery County, MD were found in a CSV from Kaggle called “Traffic Violations in USA”.
+                                            
+                                          However, the CSV contained to much data to represent and needed cleaning up. 
+                                            <br>
+                                          <strong>Our hypothesis was that the number of violations would be going up, 
+                                            but year over year data shows an improving trend of violations going down.</strong>
+                                      </p>
+                                  </div>
+                                </div>
+                                <br>
+                                <!-- plot1 end and plot2 start-->
+                                <div class = "row">   
+                                    <div class="w-75 col-xs-6 col-sm-6 col-md-6 border-right border-info" 
+                                    style="float:left;">
+                                        <p class = "lead">What does the data say?</p>
+                                          <p>
+                                            A simple mean analysis, as illustrated by box plot to the right, 
+                                            shows that hypothesis is indeed supported with the traffic violations have risen since 2012 and 
+                                            reached a peak of 13,000 violaitions per qtr in 2015 before starting a downward trend in 2016.
+                                            <br>
+                                            The next question is, will the downward trend continue? To answer this we plotted Year on Year change analysis (plot above). 
+                                            From the plot we see
+                                            <ul>
+                                              <li>From 2012 to mid 2014, Year on Year change rose significantly pushing the violation count beyond 40K</li>
+                                              <li>However from last Qtr of 2014, the Year on Year change is on negative trend such that violations dropped significantly in 2016 </li>
+                                            </ul>
+                                          </p>
+                                    </div>                               
+                                  <div class="w-75 col-xs-6 col-sm-6 col-md-6">
+                                      <p  style="background-color: #e3e3e3"><small class="text-muted">&nbsp; Boxplot showing increasing mean year on year</small></p>
+                                    <div id="boxWhisker"></div>  
+                                    
+                                  </div>
+                                <!-- plot 2 end -->
+                                  
+                                </div> 
+                              </div>
+                              <br>
+                                <!-- plot 3 start -->
+                                <div id="staticplot-2">
+                                  <div class="row">
+                                    <div class="w-75 col-xs-12 col-sm-12 col-md-9">    
+                                      <div id="boxPlot"></div>
+                                      <p  style="background-color: #e3e3e3"><small class="text-muted" >&nbsp;Depicting district wise contribution to YOY change of traffic violation </small></p>
+                                    </div>
+                                    <div class="w-75 col-xs-12 col-sm-12 col-md-3 border-left border-info">   
+                                        <p>
+                                            So, which district contributed to rise and fall of trends?
+                                            <br>
+                                            A contribution % chart (on left) was plotted, to understand the contribution increasing and decreasing trend.
+
+                                            <br>
+                                            As we see, two district, namely 3rd district-Silver spring and 4th district-Wheaton had a significant role in these trends.
+                                            The contribution from these two district has mainly determined the overall trend of violations
+                                              
+                                        </p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- plot 3 end -->
+                            </article>
+                          </div>
+                          </section>
+                      </div>
+                          <!-- End of Static portion -->
+                </div>
+                <!-- STATIC CHARTS ? TRENDS End -->
+                <!-- DASHBOARD CHARTS ? TRENDS START -->
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                       <!-- Start of Dynamic Portion -->
+                       
+                  <article class="description-content"> 
+                  <div class="container" style="background-color:white;">                 
+                   
+                    <section class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-12">
+                        <!-- Filter Form Start -->
+                          <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group" style="font-size:12px; border-width: 1px;"> 
+                                  <form>  
+                                      <ul class="list-inline" id="filters">
+                                      <li class="list-inline-item">
+                                      <label for="year">Filter By</label>
+                                      </li>
+                                      <li class="list-inline-item"></li>
+                                      <select type="select" id="years" name="years">
+                                        <option value = "0" >All years</option>
+                                      </select>
+                                      </li>
+                                      <li class="list-inline-item">
+                                      <!-- <label for="policedist">Select a Police District</label> -->
+                                      <select type="select" id="district" name="district">
+                                          <option value = "0">All Districts</option>
+                                      </select>
+                                    </li>
+                                    <li class="list-inline-item">
+                                      <!-- <label for="violCat">Select a Violation Category</label> -->
+                                      <select type="select" id="category" name="category">
+                                          <option value = "all">All Categories</option>
+                                      </select>
+                                    </li>
+                                    <li class="list-inline-item">
+                                      <button id="filter-btn" type="submit" class="btn btn-sm" 
+                          style="font-size:10px; background-color: steelblue;color:white;">Filter</button>
+                          
+                          <button id="clear-filter-btn" type="submit" class="btn btn-sm" 
+                          style="font-size:10px; background-color: steelblue; color:white">Reset</button>
+                                  </li>
+                                </ul>
+                              </div>
+                              <hr/>
+                              </div>
+                          </div>
+                          <!-- Filter form end -->
+                          <!-- Dynamic charts Start -->
+                          
+                          <div class="row">
+                                  <div class="w-75 col-xs-12 col-sm-12 col-md-6">
+                                    <div class="card" style = "border:none;margin:1rem 0 0 0;" >
+                                      <h5><strong>Violations by District</strong></h5>
+                                      <!-- bar chart displaying violation by district-->
+                                      <div id="distSpread"></div>
+                                      <!-- <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap"> -->
+                                      <div class="card-body">
+                                            
+                                      </div>
+                                  </div>
+                                  </div>
+                                  <div class="w-75 col-xs-12 col-sm-12 col-md-6">
+                                    <div class="card" style = "border:none;margin:1rem 0 0 0;" >
+                                     
+                                      <h5><strong>Violations by Category</strong></h5>
+                                      <!-- bar chart displaying violation by district-->
+                                      <div id="violationCat"></div>
+                                      <!-- <img class="card-img-top" src="../static/imgs/plot3.PNG" alt="Card image cap"> -->
+                                      <div class="card-body">
+                                            
+                                      </div>
+                                  </div>
+                                  </div>
+                          </div>
+                      </div>
+                        
+                    </section>
+                  </div>
+                  </article>
+            
+                
+                </div>
+                <!-- DASHBOARD CHARTS ? TRENDS END -->
+                <!-- Data Display START -->
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <!-- Start of data display Portion -->                    
+                  <article class="description-content"> 
+                  <div class="container" style="background-color:white;">                 
+                    
+                    <section class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-12">
+                        <!-- display data on user request -->
+                        <p>In this section, the data used to generate charts is provided. 
+                          <br> Owing to the size of the data, it is not automatically displayed. To view the data please click the button below</p>
+                          <form>
+                              <button id="data-btn" type="submit" class="btn btn-default" 
+                              style="font-size:10px; background-color: steelblue;color:white;">View Data</button>
+                          </form>
+                          <hr/>
+                          <!-- data display -->
+                          <div class="row">
+                              <div class="w-75 col-xs-12 col-sm-12 col-md-6">
+                                  <h5><strong>Displaying Page-wise Data</strong></h5>
+                                  <p id="pageDetails"></p>
+                                  <p><form>
+                                      <button id="data-btn-first" type="submit" class="btn btn-sm" 
+                                      style="font-size:10px; background-color: steelblue;color:white;">< First ></First></button>
+                                      <button id="data-btn-prev" type="submit" class="btn btn-sm" 
+                                      style="font-size:10px; background-color: steelblue;color:white;">< Prev</button>
+                                      <button id="data-btn-next" type="submit" class="btn btn-sm" 
+                                style="font-size:10px; background-color: steelblue;color:white;">Next ></button>
+                                <button id="data-btn-last" type="submit" class="btn btn-sm" 
+                                      style="font-size:10px; background-color: steelblue;color:white;">< Last ></Last></button>
+                                  </form></p>
+                                  <div id="dataTbl"></div>
+                              </div>
+                          </div>
+                        </div>
+                        
+                    </section>
+                  </div>
+                  </article>
+             </div>
+             <!-- DATA DISPLAY END -->
+            </div>
+              <!-- END OF TAB CONTENTS -->
+            
+          </div>
+          <div class = "col-xs-6 col-sm-6 col-md-3">
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-map-tab" href="#" 
+                     aria-controls="nav-map" aria-selected="true">County HeatMap of Violations </a>
+                    </div>
+              </nav>
+              <div class = "row">
+                <div class = "col-xs-12 col-sm-12 col-md-12">
+                  <div id="map"></div>
+                </div>
+              </div>
+              <div class = "row">
+                  <div class = "col-xs-12 col-sm-12 col-md-12">
+                      <p  style="background-color: #e3e3e3"><small class="text-muted">
+                          HeatMap depicting 7 police districts of Montgomery County, MD as per the density of violation
+                      </small></p>
+                  </div>
+              </div>
+                
+                
+           </div>
+        </div>
+    </div>
+<!-- NAV TABS END -->
+
+
+   
+    <!-- End of container --> 
+
+
+    <!-- API key -->
+    <script type="text/javascript" src="static/js/config.js"></script>
+    
+    <!-- BOOTSTRAP SCRIPT  -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+  <!-- D3 & Plotly -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  
+
+    <!-- custom JS  -->
+    
+    <script type="text/javascript" src="static/js/main.js"></script>
+</body>
+
+</html>

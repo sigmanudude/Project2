@@ -16,10 +16,15 @@ var prev = d3.select("#data-btn-prev");
 var next = d3.select("#data-btn-next");
 var last = d3.select("#data-btn-last");
 var first = d3.select("#data-btn-first");
+var distSumElement = d3.select("#distSum");
+
 var startpg = 1, totalpg = 36, currpg = 1;
 
 // default filter values
 var _yr = 0, _cat = "all", _dist = 0;
+
+// default values for district summary
+distSummary = "<table class = 'table table-striped'><thead><tr><th>District #</th><th>Name</th><th>Violation Count</th></tr></thead>"
 
 var geoJsonlink = "static/db/geoLoc_alldist.json";
 
@@ -29,6 +34,7 @@ var map, mapTile, mapFeatures, legend;
 function init(){
     // populate the dropdown filters
     populateFilters();
+    
     //attach event to submit buttons
     // associate event to the buttons
     submitBtn.on("click", function(){filterData();});
@@ -206,7 +212,8 @@ function addEdit_MapLayers(y, c, d, mode="add"){
         }
         // // 
         d3.json(`/distMap/${y}/${c}/${d}`).then(function(data) {
-             
+            // reset the dist summary
+            distSummary = "<table class = 'table table-striped'><thead><tr><th>District #</th><th>Name</th><th>Violation Count</th></tr></thead>"
             data.features.map( d => {
                 d.properties.total_traffic_violations = +d.properties.total_traffic_violations;
             });
@@ -253,7 +260,7 @@ function addEdit_MapLayers(y, c, d, mode="add"){
                 //
                 layer.bindPopup(feature.properties.name + "<br> Violation count:" + 
                 feature.properties.total_traffic_violations);
-        
+                distSummary += `<tr><th>${feature.properties.distID}</th><td>${feature.properties.name}</td><td>${feature.properties.total_traffic_violations}</td></tr>`
             }
             }).addTo(map);
             
@@ -289,8 +296,13 @@ function addEdit_MapLayers(y, c, d, mode="add"){
                     // Adding legend to the map
                     legend.addTo(map);
                     // legend.bringToBack();
-            }
-            
+                    
+                    
+               }
+            //    add html table for display summary
+            console.log(distSummary);
+            distSumElement.node().innerHTML ="";
+               distSumElement.node().innerHTML = `<tbody>${distSummary}</tbody></table>`;
         });
   
 }
@@ -448,3 +460,4 @@ function displayData(y,c,d,divElement,pg){
 
     }); // end of JSON
 };
+
