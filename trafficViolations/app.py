@@ -81,6 +81,7 @@ def yoy_Change():
 
     # call data extraction function - that return a DF
     df_res = dq.violation_YOY_Change(db,Violations)
+    df_res = df_res.sort_values(['Year','Qtr'])
 
     return jsonify(df_res.to_dict(orient = "records"))
 
@@ -91,7 +92,65 @@ def distContribYOY():
     # call data extraction function - that return a DF
     df_res = dq.dist_Contrib_YOY(db,Violations)
 
-    return jsonify(df_res.to_dict(orient = "records"))
+    marker= {
+        "color": 'rgb(64, 64, 64)',
+        "size": 8
+      }
+    line= {
+        "color": 'rgb(64, 64, 64)',
+        "width": 4
+      }
+
+    df_line = dq.violation_YOY_Change(db, Violations)
+    trace_line = {
+        "x": df_line.apply(lambda x:'%s-%s' % (x['Qtr'],x['Year']),axis=1).tolist(),
+        "y": df_line.YOY_Change_PCT.tolist(),
+        "type": "scatter",
+        "mode": "lines+markers",
+        "line": line,
+        "marker": marker, 
+        "name" : "YOY %"
+        }
+    agencies = []
+    df_sub = dq.dist_Contrib_YOY(db,Violations)
+    for s in df_sub.SubAgency.unique():
+        agencies.append(     
+        {
+        "x": df_line.apply(lambda x:'%s-%s' % (x['Qtr'],x['Year']),axis=1).tolist(),
+        "y": df_sub[df_sub.SubAgency == s].Contrib_pct.tolist(),
+        "type": "bar",
+        "opacity": 0.8,
+        "name": s
+        })
+    agencies.append(trace_line)
+    return jsonify(agencies)
+
+@app.route("/dashboardData/<yr>/<cat>/<dist>/<pg>")
+def dashboardData(yr,cat,dist,pg):
+    """Return a json for all dashboard plots and data to be displayed as html table"""
+    
+    # get all data as per the filter criteria requested
+    df_all_data = dq.filterData_main(db,Violations, int(yr), str(cat), int(dist))
+
+    pg = int(pg)
+    st_row = 0
+    end_row = 500
+    if(pg == 36):
+        st_row = (pg-1)*500
+        end_row = df_all_data.index.size        
+    elif (pg == 1):
+        st_row = 0
+        end_row = pg * 500 
+    else:
+        st_row = (pg-1)*500
+        end_row = pg *500
+
+    df_all_data = df_all_data.iloc[st_row:end_row,]
+
+    dataHTM = {"html" : df_all_data.to_html(header = True, border = 0, classes = ['table table-striped table-hover borderless'])}
+    # print(dataHTM)
+
+    return jsonify(dataHTM)
 
 @app.route("/violationByDist/<yr>/<cat>/<dist>")
 def violationByDist(yr,cat,dist):
