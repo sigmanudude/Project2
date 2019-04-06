@@ -81,6 +81,7 @@ def yoy_Change():
 
     # call data extraction function - that return a DF
     df_res = dq.violation_YOY_Change(db,Violations)
+    df_res = df_res.sort_values(['Year','Qtr'])
 
     return jsonify(df_res.to_dict(orient = "records"))
 
@@ -91,12 +92,24 @@ def distContribYOY():
     # call data extraction function - that return a DF
     df_res = dq.dist_Contrib_YOY(db,Violations)
 
+    marker= {
+        "color": 'rgb(64, 64, 64)',
+        "size": 8
+      }
+    line= {
+        "color": 'rgb(64, 64, 64)',
+        "width": 4
+      }
+
     df_line = dq.violation_YOY_Change(db, Violations)
     trace_line = {
         "x": df_line.apply(lambda x:'%s-%s' % (x['Qtr'],x['Year']),axis=1).tolist(),
         "y": df_line.YOY_Change_PCT.tolist(),
         "type": "scatter",
-        "mode": "lines"
+        "mode": "lines+markers",
+        "line": line,
+        "marker": marker, 
+        "name" : "YOY %"
         }
     agencies = []
     df_sub = dq.dist_Contrib_YOY(db,Violations)
@@ -105,7 +118,9 @@ def distContribYOY():
         {
         "x": df_line.apply(lambda x:'%s-%s' % (x['Qtr'],x['Year']),axis=1).tolist(),
         "y": df_sub[df_sub.SubAgency == s].Contrib_pct.tolist(),
-        "type": "bar"  
+        "type": "bar",
+        "opacity": 0.8,
+        "name": s
         })
     agencies.append(trace_line)
     return jsonify(agencies)

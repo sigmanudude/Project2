@@ -101,6 +101,7 @@ nav > div a.nav-item.nav-link:focus
 .description-header-alt {
   /* Positioning */
   margin: 10px 10px 10px 10px;
+  
   font-family: Georgia, Times, "Times New Roman", serif;
 
   /* Typography */
@@ -120,11 +121,16 @@ nav > div a.nav-item.nav-link:focus
 
   /* Visual */
   background-color: rgba(255, 255, 255, 1);
+
+  /* typography */
+  font-size:12px;
+  
 }
 
 .description-content-alt {
   /* Box-model */
   padding: 5px;
+  margin-bottom: 15px;
 
   /* Positioning */
   /* margin-top: 2px; */
@@ -324,9 +330,13 @@ adiv{
 #map
 {
   /* width:530px;
-  height: 50px; */
-  height: calc(100% + 200px); width: calc(100% + 40px); position: absolute !important;
+  height: 250px; */
+  /* height: 100%; width: calc(100% - 30px); position: absolute !important; */
+  height: 310px; width: 100%; 
 }
+
+
+
 .legend {
   padding: 6px 8px;
   font: 9px Arial, Helvetica, sans-serif;
@@ -365,3 +375,14 @@ adiv{
   padding-left: 4px;
   vertical-align: middle;
 }
+
+/* PLOT styles */
+.def-plot-style{
+  border-style: solid;
+  border-color: #e3e3e3;
+  /* border-radius: 10px; */
+  
+}
+
+
+
