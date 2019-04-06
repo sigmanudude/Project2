@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <!-- <title>Document</title> -->
 
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -26,12 +26,12 @@
 
     <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
     <script>
     $( function() {
       $( "#tabs" ).tabs();
     } );
-    </script> -->
+    </script>
 
     <script type="text/javascript" src="static/js/choropleth.js"></script>
     <!-- Plotly js -->
@@ -379,7 +379,7 @@
               <nav>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-map-tab" href="#" 
-                     aria-controls="nav-map" aria-selected="true">County Map</a>
+                     aria-controls="nav-map" aria-selected="true">County HeatMap of Violations </a>
                     </div>
               </nav>
               <div class = "row">
@@ -390,8 +390,9 @@
               <div class = "row">
                   <div class = "col-xs-12 col-sm-12 col-md-12">
                       <p  style="background-color: #e3e3e3"><small class="text-muted">
-                          Map depicting 7 police districts of Montgomery County, MD
+                          HeatMap depicting 7 police districts of Montgomery County, MD as per the density of violation
                       </small></p>
+                      <div id="distSum"></div>
                   </div>
               </div>
                 
@@ -400,7 +401,12 @@
         </div>
     </div>
 <!-- NAV TABS END -->
-
+<footer>
+<br>
+  <div class="description-content-alt">
+    <p  style="color:white;"><small class="text-muted"">This data is obtained from Kaggle and used only for informational and educational purpose</small></p>
+  </div>
+</footer>
 
    
     <!-- End of container --> 
