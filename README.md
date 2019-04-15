@@ -1,5 +1,5 @@
 # Storyboard of Traffic Violations for Montgomery County, MD
-### Jointly developed by Justin Schlankey, Madhu S, Diane Tate and Yahia Zemoura 
+### Jointly developed by Justin Schlankey, Madhuram S, Diane Tate and Yahia Zemoura 
 ### Link : [Traffic Violations Dashboard](https://traffic-violations-dashboard.herokuapp.com/)
 
 
@@ -9,11 +9,11 @@ Visualize the trends of traffic violations for Montgomery County, MD based on 4 
 
 #### Since 2012, the number of violations was be going up as we predicted, however the data also shows an improving trend of violations going down based on year over year change as depicted below
 
-![Trend Vs YoY change](outputImages/trend_vs_yoychange.png)
+![Trend Vs YoY change](outputImages/trend_vs_yoychange.PNG)
 
 At a summary level, we also see that District 4 and District 3 are top runners in the number of violations. Also, they significantly impact the YOY change.
 
-![District Summary and Contribution to YoY change](outputImages/district-wise_summary)
+![District Summary and Contribution to YoY change](outputImages/district-wise_summary.PNG)
 
 
 ### Development Process:
