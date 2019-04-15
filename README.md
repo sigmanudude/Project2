@@ -1,6 +1,6 @@
 # Storyboard of Traffic Violations for Montgomery County, MD
 ### Jointly developed by Justin Schlankey, Madhu S, Diane Tate and Yahia Zemoura 
-### Link : ![Traffic Violations Dashboard](https://traffic-violations-dashboard.herokuapp.com/)
+### Link : [Traffic Violations Dashboard](https://traffic-violations-dashboard.herokuapp.com/)
 
 
 Visualize the trends of traffic violations for Montgomery County, MD based on 4 years of data (2012 to 2016). This project focusses heavily on visualization as a way of telling a story. Python, Flask API, D3.JS, leaflet.js, JQuery and HTML/CSS are main technologies used for development. SQLite was used for storage.
@@ -19,7 +19,7 @@ At a summary level, we also see that District 4 and District 3 are top runners i
 ### Development Process:
 
 #### Data extraction and cleaning (![link to ipynb](importDataToSQLite.ipynb): 
-* The data was extracted as zip file from ![Kaggle](https://www.kaggle.com/felix4guti/traffic-violations-in-usa). 
+* The data was extracted as zip file from [Kaggle](https://www.kaggle.com/felix4guti/traffic-violations-in-usa). 
 * Using pandas, the data was read into dataframes which was used for next steps
 * Before we proceed to Data aggregation and Loading to SQLite, the data was cleaned as per the below process
 	* Columns not used for dashboard was removed
@@ -57,4 +57,4 @@ The dashboard app can be divided broadly into FLASK app (back-end) and HTML/CSS/
 - from broweser, visit localhost:5000/ to view the webpage
 
 
-### Data Credits: Datasource obtained from ![Data Montgomery county, MD](https://data.montgomerycountymd.gov/Public-Safety/Traffic-Violations/4mse-ku6). Also available from ![Kaggle](https://www.kaggle.com/felix4guti/traffic-violations-in-usa)
+### Data Credits: Datasource obtained from [Data Montgomery county, MD](https://data.montgomerycountymd.gov/Public-Safety/Traffic-Violations/4mse-ku6). Also available from [Kaggle](https://www.kaggle.com/felix4guti/traffic-violations-in-usa)
