@@ -43,7 +43,7 @@ The dashboard app can be divided broadly into FLASK app (back-end) and HTML/CSS/
 
 ##### Front-End Webpages  
 * HTML and CSS primarily provide the layout, format, styles and static content of the entire website. (![code link](trafficViolations/templates/index.html)
-* Javascript ((![code link](trafficViolations/static/main.js)) is completely responsible for user interactivty and dynamically changing the page content based on user inputs.
+* Javascript ((![code link](trafficViolations/static/js/main.js)) is completely responsible for user interactivty and dynamically changing the page content based on user inputs.
 * jQuery and d3.js are key libraris of Javascript that provides the data-driven functionality
 * lealet.js is responsible for the map display on the website
 
